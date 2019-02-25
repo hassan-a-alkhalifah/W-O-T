@@ -9,6 +9,10 @@ import deleteIcon from '../assets/images/delete-icon.png';
 
 function Header(props) {
 
+  const headerStyles = {
+    width: '100%',
+    position: 'fixed'
+  }
   const headerTitleWrapperStyles = {
     height: '68px',
     display: 'flex',
@@ -43,7 +47,7 @@ function Header(props) {
   }
 
   return(
-    <div>
+    <div style={headerStyles}>
       <div style={headerTitleWrapperStyles}>
         <h1>W-O-T</h1>
       </div>
