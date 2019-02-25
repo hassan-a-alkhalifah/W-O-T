@@ -66,7 +66,8 @@ function Exercise(props) {
   }
   const addSetIconStyles = {
     width: '12px',
-    height: '12px'
+    height: '12px',
+    cursor: 'pointer'
   }
 
   return(
