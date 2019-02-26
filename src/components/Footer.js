@@ -26,7 +26,7 @@ function Footer() {
     <div style={footerWrapperStyles}>
       <p>Coded and Designed by Hassan Al-khalifah</p>
       <img src={commentIcon} alt='Comment Icon' style={footerIconStyles}/>
-      <a href='https://github.com/hassan-a-alkhalifah' target='_blank'>
+      <a href='https://github.com/hassan-a-alkhalifah' target='_blank' rel='noopener noreferrer'>
         <img src={githubIcon} alt='Github Icon' style={footerIconStyles}/>
       </a>
     </div>
