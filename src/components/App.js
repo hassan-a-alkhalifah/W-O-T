@@ -35,6 +35,17 @@ class App extends Component {
         }
       ]
     }
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(eventType, inputName, inputID, exerciseID) {
+    if(inputName === 'workout') {
+      this.setState({
+        [eventType.target.name]: eventType.target.value
+      }, () => {
+        console.log(this.state);
+      })
+    }
   }
 
   render() {
@@ -50,6 +61,7 @@ class App extends Component {
                 workoutDateInput={this.state.workoutDateInput}
                 workoutNotesInput={this.state.workoutNotesInput}
                 masterExerciseList={this.state.masterExerciseList}
+                onInputChange={this.handleInputChange}
               />
             }
           />
