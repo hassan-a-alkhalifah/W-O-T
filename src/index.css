@@ -17,6 +17,7 @@ body {
 .checkbox input[type='checkbox'] {
   opacity: 0;
   position: absolute;
+  cursor: pointer;
 }
 .checkbox span {
   display: inline-block;

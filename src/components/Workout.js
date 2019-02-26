@@ -42,6 +42,7 @@ function Workout(props) {
   const noteIconStyles = {
     width: '24px',
     height: '26px',
+    cursor: 'pointer'
   }
   const workoutNotesInputStyles = {
     display: 'none',
@@ -57,7 +58,8 @@ function Workout(props) {
   }
   const addExerciseIconStyles = {
     width: '40px',
-    height: '40px'
+    height: '40px',
+    cursor: 'pointer'
   }
 
   return(
