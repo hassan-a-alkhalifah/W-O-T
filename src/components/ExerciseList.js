@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Exercise from './Exercise';
 
-function ExerciseList(props) {
+function ExerciseList({ masterExerciseList, onInputChange }) {
 
   const exerciseListStyles = {
     display: 'flex',
@@ -13,9 +13,26 @@ function ExerciseList(props) {
 
   return(
     <div style={exerciseListStyles}>
-      <Exercise />
+      {
+        masterExerciseList.forEach((exercise) => {
+          return(
+            <Exercise
+              key={exercise.exerciseID}
+              exerciseID={exercise.exerciseID}
+              exerciseName={exercise.exerciseName}
+              setList={exercise.setList}
+              onInputChange={onInputChange}
+            />
+          );
+        })
+      }
     </div>
   );
+}
+
+ExerciseList.propTypes = {
+  masterExerciseList: PropTypes.array,
+  onInputChange: PropTypes.func
 }
 
 export default ExerciseList;
