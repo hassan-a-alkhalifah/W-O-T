@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Exercise from './Exercise';
 
-function ExerciseList({ masterExerciseList, onInputChange }) {
+function ExerciseList({ newExerciseList }) {
 
   const exerciseListStyles = {
     display: 'flex',
@@ -14,14 +15,13 @@ function ExerciseList({ masterExerciseList, onInputChange }) {
   return(
     <div style={exerciseListStyles}>
       {
-        masterExerciseList.map((exercise) => {
+        newExerciseList.map((exercise) => {
           return(
             <Exercise
               key={exercise.exerciseID}
               exerciseID={exercise.exerciseID}
               exerciseName={exercise.exerciseName}
               setList={exercise.setList}
-              onInputChange={onInputChange}
             />
           );
         })
@@ -31,8 +31,13 @@ function ExerciseList({ masterExerciseList, onInputChange }) {
 }
 
 ExerciseList.propTypes = {
-  masterExerciseList: PropTypes.array,
-  onInputChange: PropTypes.func
+  newExerciseList: PropTypes.array
 }
 
-export default ExerciseList;
+const mapStateToProps = (state) => {
+  return {
+    newExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList
+  }
+}
+
+export default connect(mapStateToProps)(ExerciseList);

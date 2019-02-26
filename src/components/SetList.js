@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Set from './Set';
 
-function SetList({ setList, exerciseID, onInputChange }) {
+function SetList({ setList, exerciseID }) {
   return(
     <div>
       {
@@ -15,7 +15,6 @@ function SetList({ setList, exerciseID, onInputChange }) {
               weight={set.weight}
               reps={set.reps}
               exerciseID={exerciseID}
-              onInputChange={onInputChange}
             />
           );
         })
@@ -26,8 +25,7 @@ function SetList({ setList, exerciseID, onInputChange }) {
 
 SetList.propTypes = {
   setList: PropTypes.array,
-  exerciseID: PropTypes.string,
-  onInputChange: PropTypes.func
+  exerciseID: PropTypes.string
 }
 
 export default SetList;
