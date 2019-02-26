@@ -75,7 +75,7 @@ function Exercise(props) {
       <div style={exerciseNameInputWrapperStyles}>
         <div style={exerciseNameInputSpacerStyles}></div>
         <input type='text' placeholder='Enter Exercise Name' style={exerciseNameInputStyles}/>
-        <label class='checkbox'>
+        <label className='checkbox'>
           <input type='checkbox' name='exerciseCheckboxCheckedList'/>
           <span></span>
         </label>
