@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Set(props) {
+function Set({ setID, setNumber, weight, reps, exerciseID, onInputChange }) {
 
   const setStyles = {
     display: 'flex',
@@ -39,21 +39,38 @@ function Set(props) {
     <div style={setStyles}>
       <div style={setSubWrapper}>
         <div style={setNumberWrapperStyles}>
-          <p></p>
+          <p>{setNumber}</p>
         </div>
         <input
           className="weightInput"
           type="number"
           style={weightInputStyles}
+          value={weight}
+          onChange={(event) => {
+            onInputChange(event, 'weight', setID, exerciseID);
+          }}
         />
         <input
           className="repInput"
           type="number"
           style={repsInputStyles}
+          value={reps}
+          onChange={(event) => {
+            onInputChange(event, 'reps', setID, exerciseID);
+          }}
         />
       </div>
     </div>
   );
+}
+
+Set.propTypes = {
+  setID: PropTypes.number,
+  setNumber: PropTypes.number,
+  weight: PropTypes.number,
+  reps: PropTypes.number,
+  exerciseID: PropTypes.number,
+  onInputChange: PropTypes.func
 }
 
 export default Set;
