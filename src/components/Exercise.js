@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import addSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
-function Exercise(props) {
+function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
 
   const exerciseStyles = {
     display: 'flex',
@@ -74,9 +74,23 @@ function Exercise(props) {
     <div style={exerciseStyles}>
       <div style={exerciseNameInputWrapperStyles}>
         <div style={exerciseNameInputSpacerStyles}></div>
-        <input type='text' placeholder='Enter Exercise Name' style={exerciseNameInputStyles}/>
+        <input
+          type='text'
+          placeholder='Enter Exercise Name'
+          style={exerciseNameInputStyles}
+          value={exerciseName}
+          onChange={(event) => {
+            onInputChange(event, 'exercise', exerciseID);
+          }}
+        />
         <label className='checkbox'>
-          <input type='checkbox' name='exerciseCheckboxCheckedList'/>
+          <input
+            type='checkbox'
+            name='exerciseCheckboxCheckedList'
+            onChange={(event) => {
+              onInputChange(event, 'exerciseCheckbox', exerciseID);
+            }}
+          />
           <span></span>
         </label>
       </div>
@@ -91,13 +105,24 @@ function Exercise(props) {
           <p>Reps</p>
         </div>
       </div>
-      <SetList />
+      <SetList
+        setList={setList}
+        exerciseID={exerciseID}
+        onInputChange={onInputChange}
+      />
       <div style={addSetIconWrapperStyles}>
         <div style={addSetIconSpacerStyles}></div>
         <img src={addSetIcon} alt='Add Set Icon' style={addSetIconStyles}/>
       </div>
     </div>
   );
+}
+
+Exercise.propTypes = {
+  exerciseID: PropTypes.number,
+  exerciseName: PropTypes.string,
+  setList: PropTypes.array,
+  onInputChange: PropTypes.func
 }
 
 export default Exercise;
