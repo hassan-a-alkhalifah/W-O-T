@@ -6,7 +6,7 @@ import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout(props) {
+function Workout({ workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList, onInputChange }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -67,18 +67,57 @@ function Workout(props) {
       <div style={workoutFormStyles}>
         <div style={workoutFormTopWrapperStyles}>
           <div style={workoutFormTopWrapperSpacerStyles}></div>
-          <input type='text' placeholder='Enter Workout Title' name='workoutTitleInput' style={Object.assign({}, workoutInputStyles, workoutTitleInputStyles)}/>
+          <input
+            type='text'
+            placeholder='Enter Workout Title'
+            name='workoutTitleInput'
+            style={Object.assign({}, workoutInputStyles, workoutTitleInputStyles)}
+            value={workoutTitleInput}
+            onChange={(event) => {
+              onInputChange(event, 'workout');
+            }}
+          />
           <img src={noteIcon} alt='Note Icon' style={noteIconStyles}/>
         </div>
-        <input type='date' placeholder='date' name='dateInput' style={workoutInputStyles}/>
-        <textarea rows='4' cols='27' placeholder='Enter Workout Notes' name='workoutNotesInput' style={workoutNotesInputStyles}></textarea>
+        <input
+          type='date'
+          placeholder='date'
+          name='dateInput'
+          style={workoutInputStyles}
+          value={workoutDateInput}
+          onChange={(event) => {
+            onInputChange(event, 'workout');
+          }}
+        />
+        <textarea
+          rows='4'
+          cols='27'
+          placeholder='Enter Workout Notes'
+          name='workoutNotesInput'
+          style={workoutNotesInputStyles}
+          value={workoutNotesInput}
+          onChange={(event) => {
+            onInputChange(event, 'workout');
+          }}
+        ></textarea>
       </div>
-      <ExerciseList />
+      <ExerciseList
+        masterExerciseList={masterExerciseList}
+        onInputChange={onInputChange}
+      />
       <div style={addExerciseIconWrapperStyles}>
         <img src={addExerciseIcon} alt='Add Exercise Icon' style={addExerciseIconStyles}/>
       </div>
     </div>
   );
+}
+
+Workout.propTypes = {
+  workoutTitleInput: PropTypes.string,
+  workoutDateInput: PropTypes.string,
+  workoutNotesInput: PropTypes.string,
+  masterExerciseList: PropTypes.array,
+  onInputChange: PropTypes.func
 }
 
 export default Workout;
