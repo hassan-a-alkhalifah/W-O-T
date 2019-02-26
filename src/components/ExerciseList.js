@@ -14,7 +14,7 @@ function ExerciseList({ masterExerciseList, onInputChange }) {
   return(
     <div style={exerciseListStyles}>
       {
-        masterExerciseList.forEach((exercise) => {
+        masterExerciseList.map((exercise) => {
           return(
             <Exercise
               key={exercise.exerciseID}
