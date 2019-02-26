@@ -119,7 +119,7 @@ function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
 }
 
 Exercise.propTypes = {
-  exerciseID: PropTypes.number,
+  exerciseID: PropTypes.string,
   exerciseName: PropTypes.string,
   setList: PropTypes.array,
   onInputChange: PropTypes.func
