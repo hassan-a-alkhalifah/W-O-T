@@ -65,11 +65,11 @@ function Set({ setID, setNumber, weight, reps, exerciseID, onInputChange }) {
 }
 
 Set.propTypes = {
-  setID: PropTypes.number,
+  setID: PropTypes.string,
   setNumber: PropTypes.number,
-  weight: PropTypes.number,
-  reps: PropTypes.number,
-  exerciseID: PropTypes.number,
+  weight: PropTypes.string,
+  reps: PropTypes.string,
+  exerciseID: PropTypes.string,
   onInputChange: PropTypes.func
 }
 
