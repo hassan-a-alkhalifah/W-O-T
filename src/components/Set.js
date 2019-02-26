@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Set({ setID, setNumber, weight, reps, exerciseID, onInputChange }) {
+function Set({ setID, setNumber, weight, reps, exerciseID }) {
 
   const setStyles = {
     display: 'flex',
@@ -45,19 +45,11 @@ function Set({ setID, setNumber, weight, reps, exerciseID, onInputChange }) {
           className="weightInput"
           type="number"
           style={weightInputStyles}
-          value={weight}
-          onChange={(event) => {
-            onInputChange(event, 'weight', setID, exerciseID);
-          }}
         />
         <input
           className="repInput"
           type="number"
           style={repsInputStyles}
-          value={reps}
-          onChange={(event) => {
-            onInputChange(event, 'reps', setID, exerciseID);
-          }}
         />
       </div>
     </div>
@@ -69,8 +61,7 @@ Set.propTypes = {
   setNumber: PropTypes.number,
   weight: PropTypes.string,
   reps: PropTypes.string,
-  exerciseID: PropTypes.string,
-  onInputChange: PropTypes.func
+  exerciseID: PropTypes.string
 }
 
 export default Set;
