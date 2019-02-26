@@ -6,7 +6,7 @@ function SetList({ setList, exerciseID, onInputChange }) {
   return(
     <div>
       {
-        setList.forEach((set) => {
+        setList.map((set) => {
           return(
             <Set
               key={set.setID}
@@ -26,7 +26,7 @@ function SetList({ setList, exerciseID, onInputChange }) {
 
 SetList.propTypes = {
   setList: PropTypes.array,
-  exerciseID: PropTypes.number,
+  exerciseID: PropTypes.string,
   onInputChange: PropTypes.func
 }
 
