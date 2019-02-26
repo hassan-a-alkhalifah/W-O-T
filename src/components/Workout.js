@@ -71,7 +71,7 @@ function Workout(props) {
           <img src={noteIcon} alt='Note Icon' style={noteIconStyles}/>
         </div>
         <input type='date' placeholder='date' name='dateInput' style={workoutInputStyles}/>
-        <textArea rows='4' cols='27' placeholder='Enter Workout Notes' name='workoutNotesInput' style={workoutNotesInputStyles}></textArea>
+        <textarea rows='4' cols='27' placeholder='Enter Workout Notes' name='workoutNotesInput' style={workoutNotesInputStyles}></textarea>
       </div>
       <ExerciseList />
       <div style={addExerciseIconWrapperStyles}>
