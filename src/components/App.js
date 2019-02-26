@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { v4 } from 'uuid';
 import Error404 from './Error404';
 import Header from './Header';
@@ -11,8 +9,8 @@ import Footer from './Footer';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.initialExerciseID = v4();
     this.initialSetID = v4();
     this.state = {
@@ -49,6 +47,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.props.newWorkoutMasterExerciseList);
     return (
       <div>
         <Header />
@@ -56,13 +55,7 @@ class App extends Component {
           <Route
             exact path='/'
             render={()=>
-              <Workout
-                workoutTitleInput={this.state.workoutTitleInput}
-                workoutDateInput={this.state.workoutDateInput}
-                workoutNotesInput={this.state.workoutNotesInput}
-                masterExerciseList={this.state.masterExerciseList}
-                onInputChange={this.handleInputChange}
-              />
+              <Workout />
             }
           />
           <Route
@@ -79,4 +72,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(connect()(App));
+export default withRouter(App);
