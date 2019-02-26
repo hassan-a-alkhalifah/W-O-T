@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import addSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
-function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
+function Exercise({ exerciseID, exerciseName, setList }) {
 
   const exerciseStyles = {
     display: 'flex',
@@ -78,18 +78,11 @@ function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
           type='text'
           placeholder='Enter Exercise Name'
           style={exerciseNameInputStyles}
-          value={exerciseName}
-          onChange={(event) => {
-            onInputChange(event, 'exercise', exerciseID);
-          }}
         />
         <label className='checkbox'>
           <input
             type='checkbox'
             name='exerciseCheckboxCheckedList'
-            onChange={(event) => {
-              onInputChange(event, 'exerciseCheckbox', exerciseID);
-            }}
           />
           <span></span>
         </label>
@@ -108,7 +101,6 @@ function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
       <SetList
         setList={setList}
         exerciseID={exerciseID}
-        onInputChange={onInputChange}
       />
       <div style={addSetIconWrapperStyles}>
         <div style={addSetIconSpacerStyles}></div>
@@ -121,8 +113,7 @@ function Exercise({ exerciseID, exerciseName, setList, onInputChange }) {
 Exercise.propTypes = {
   exerciseID: PropTypes.string,
   exerciseName: PropTypes.string,
-  setList: PropTypes.array,
-  onInputChange: PropTypes.func
+  setList: PropTypes.array
 }
 
 export default Exercise;
