@@ -1,6 +1,8 @@
 import constants from './../constants';
 const { c } = constants;
 
-export const addExercise = () => ({
-  type: c.ADD_EXERCISE
+export const addExercise = (newExerciseID, newSetID) => ({
+  type: c.ADD_EXERCISE,
+  newExerciseID : newExerciseID,
+  newSetID: newSetID
 })
