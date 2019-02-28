@@ -10,6 +10,10 @@ import App from './components/App';
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
+let unsubscribe = store.subscribe(() =>
+console.log(store.getState())
+)
+
 ReactDOM.render(
   <HashRouter>
     <Provider store={ store }>
