@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addExercise } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import addExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout() {
+function Workout({ dispatch }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -90,10 +92,17 @@ function Workout() {
       </div>
       <ExerciseList />
       <div style={addExerciseIconWrapperStyles}>
-        <img src={addExerciseIcon} alt='Add Exercise Icon' style={addExerciseIconStyles}/>
+        <img
+          src={addExerciseIcon}
+          alt='Add Exercise Icon'
+          style={addExerciseIconStyles}
+          onClick={() => {
+            dispatch(addExercise());
+          }}
+        />
       </div>
     </div>
   );
 }
 
-export default Workout;
+export default connect()(Workout);
