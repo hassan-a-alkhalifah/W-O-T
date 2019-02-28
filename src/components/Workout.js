@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { v4 } from 'uuid';
 import { addExercise } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import addExerciseIcon from '../assets/images/add-exercise-icon.png';
@@ -7,7 +8,7 @@ import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -97,7 +98,9 @@ function Workout({ dispatch }) {
           alt='Add Exercise Icon'
           style={addExerciseIconStyles}
           onClick={() => {
-            dispatch(addExercise());
+            const newExerciseID = v4();
+            const newSetID = v4();
+            dispatch(addExercise(newExerciseID, newSetID));
           }}
         />
       </div>
