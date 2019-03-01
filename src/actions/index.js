@@ -7,7 +7,8 @@ export const addExercise = (newExerciseID, newSetID) => ({
   newSetID: newSetID
 })
 
-export const addSet = (addedSetExerciseID) => ({
+export const addSet = (addedSetExerciseID, addedSetID) => ({
   type: c.ADD_SET,
-  addedSetExerciseID: addedSetExerciseID
+  addedSetExerciseID: addedSetExerciseID,
+  addedSetID: addedSetID
 })
