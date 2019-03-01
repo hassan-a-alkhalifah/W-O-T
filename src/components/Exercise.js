@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { addSet } from '../actions';
 import addSetIcon from '../assets/images/add-set-icon.png';
@@ -111,7 +112,8 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
           alt='Add Set Icon'
           style={addSetIconStyles}
           onClick={() => {
-            dispatch(addSet(exerciseID));
+            const addedSetID = v4();
+            dispatch(addSet(exerciseID, addedSetID));
           }}
         />
       </div>
