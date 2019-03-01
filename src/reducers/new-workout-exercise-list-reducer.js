@@ -26,16 +26,19 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID } = action;
+
   switch(action.type) {
-    case c.ADD_EXERCISE:
+    case c.ADD_EXERCISE: {
       const nextExercisePos = state.masterExerciseList.length + 1;
       const newExercise = {
-        exerciseID: action.newExerciseID,
+        exerciseID: newExerciseID,
         exerciseNumber: nextExercisePos,
         exerciseName: '',
         setList: [
           {
-            setID: action.newSetID,
+            setID: newSetID,
             setNumber: 1,
             weight: '',
             reps: ''
@@ -47,7 +50,30 @@ export default (state = initialState, action) => {
         masterExerciseList: newMasterExerciseList
       });
       return newState;
-
+    }
+    case c.ADD_SET: {
+      const newMasterExerciseList = state.masterExerciseList.map((exercise) => {
+        if(exercise.exerciseID === addedSetExerciseID) {
+          const nextSetPos = exercise.setList.length + 1;
+          const newSet = {
+            setID: addedSetID,
+            setNumber: nextSetPos,
+            weight: '',
+            reps: ''
+          }
+          const newSetList = [...exercise.setList, newSet];
+          exercise = Object.assign({}, exercise, {
+            setList: newSetList
+          });
+        }
+        return exercise;
+      });
+      console.log(newMasterExerciseList);
+      const newState = Object.assign({}, state, {
+        masterExerciseList: newMasterExerciseList
+      });
+      return newState;
+    }
     default:
       return state;
   }

@@ -3,6 +3,12 @@ const { c } = constants;
 
 export const addExercise = (newExerciseID, newSetID) => ({
   type: c.ADD_EXERCISE,
-  newExerciseID : newExerciseID,
+  newExerciseID: newExerciseID,
   newSetID: newSetID
+})
+
+export const addSet = (addedSetExerciseID, addedSetID) => ({
+  type: c.ADD_SET,
+  addedSetExerciseID: addedSetExerciseID,
+  addedSetID: addedSetID
 })
