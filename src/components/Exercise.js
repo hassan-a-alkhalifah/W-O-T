@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addSet } from '../actions';
 import addSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
-function Exercise({ exerciseID, exerciseName, setList }) {
+function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
 
   const exerciseStyles = {
     display: 'flex',
@@ -104,7 +106,14 @@ function Exercise({ exerciseID, exerciseName, setList }) {
       />
       <div style={addSetIconWrapperStyles}>
         <div style={addSetIconSpacerStyles}></div>
-        <img src={addSetIcon} alt='Add Set Icon' style={addSetIconStyles}/>
+        <img
+          src={addSetIcon}
+          alt='Add Set Icon'
+          style={addSetIconStyles}
+          onClick={() => {
+            dispatch(addSet(exerciseID));
+          }}
+        />
       </div>
     </div>
   );
@@ -116,4 +125,4 @@ Exercise.propTypes = {
   setList: PropTypes.array
 }
 
-export default Exercise;
+export default connect()(Exercise);
