@@ -27,7 +27,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
         if(exercise.exerciseID === addedSetExerciseID) {
           const nextSetPos = exercise.setList.length + 1;
           const newSet = {
-            setID: v4(),
+            setID: addedSetID,
             setNumber: nextSetPos,
             weight: '',
             reps: ''
