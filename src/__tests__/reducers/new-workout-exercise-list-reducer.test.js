@@ -78,4 +78,42 @@ describe('newWorkoutExerciseListReducer', () => {
     );
   });
 
+  test('Should successfully add new set data to setList based on exercise ID provided', () => {
+    const addedSetID = v4();
+    const currentExerciseID = initialState.masterExerciseList[0].exerciseID;
+    action = {
+      type: c.ADD_SET,
+      addedSetExerciseID: currentExerciseID,
+      addedSetID: addedSetID
+    }
+    expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
+      {
+        "masterExerciseList": [
+          {
+            "exerciseID": initialExerciseID,
+            "exerciseName": "",
+            "exerciseNumber": 1,
+            "setList": [
+              {
+                "reps": "",
+                "setID": initialSetID,
+                "setNumber": 1,
+                "weight": ""
+              },
+              {
+                "reps": "",
+                "setID": addedSetID,
+                "setNumber": 2,
+                "weight": ""
+              }
+            ]
+          },
+        ],
+        "workoutDateInput": "",
+        "workoutNotesInput": "",
+        "workoutTitleInput": ""
+      }
+    );
+  });
+
 });
