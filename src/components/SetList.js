@@ -6,15 +6,16 @@ function SetList({ setList, exerciseID }) {
   return(
     <div>
       {
-        setList.map((set) => {
+        setList.map((set, index) => {
           return(
             <Set
-              key={set.setID}
-              setID={set.setID}
-              setNumber={set.setNumber}
-              weight={set.weight}
-              reps={set.reps}
-              exerciseID={exerciseID}
+              key={ set.setID }
+              setID={ set.setID }
+              setPos={ index + 1 }
+              weight={ set.weight }
+              reps={ set.reps }
+              exerciseID={ exerciseID }
+              noOfSets={ setList.length }
             />
           );
         })
