@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Set({ setID, setNumber, weight, reps, exerciseID }) {
+function Set({ setID, setPos, weight, reps, exerciseID, noOfSets }) {
 
   const setStyles = {
     display: 'flex',
     alignItems: 'center'
-  }
+  };
+  const setWrapperSpacerStyles = {
+    width: '31px',
+    height: '13px'
+  };
   const setSubWrapper = {
     width: '198px',
     height: '34px',
@@ -14,13 +18,13 @@ function Set({ setID, setNumber, weight, reps, exerciseID }) {
     justifyContent: 'center',
     border: '1px solid #3498DB',
     marginTop: '-1px'
-  }
+  };
   const setNumberWrapperStyles = {
     width: '58px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  };
   const weightInputStyles = {
     width: '67px',
     paddingLeft: '13px',
@@ -28,18 +32,40 @@ function Set({ setID, setNumber, weight, reps, exerciseID }) {
     borderRight: '1px solid #3498DB',
     borderBottom: 'none',
     borderLeft: '1px solid #3498DB'
-  }
+  };
   const repsInputStyles = {
     width: '45px',
     paddingLeft: '13px',
     border: 'none'
+  };
+  const setCheckBoxStyles = {
+    marginLeft: '12px'
+  }
+
+  let ifNotFirstSetCheckbox = null;
+  let ifNotFirstSetSpacer = null;
+
+  if(setPos !== 1) {
+    ifNotFirstSetCheckbox =
+    <label className='checkbox' style={setCheckBoxStyles}>
+      <input
+        type='checkbox'
+        name='setCheckboxCheckedList'
+      />
+      <span></span>
+    </label>;
+  }
+  if(noOfSets !== 1) {
+    ifNotFirstSetSpacer =
+    <div style={setWrapperSpacerStyles}></div>
   }
 
   return(
     <div style={setStyles}>
+      {ifNotFirstSetSpacer}
       <div style={setSubWrapper}>
         <div style={setNumberWrapperStyles}>
-          <p>{setNumber}</p>
+          <p>{setPos}</p>
         </div>
         <input
           className="weightInput"
@@ -52,16 +78,18 @@ function Set({ setID, setNumber, weight, reps, exerciseID }) {
           style={repsInputStyles}
         />
       </div>
+      {ifNotFirstSetCheckbox}
     </div>
   );
 }
 
 Set.propTypes = {
   setID: PropTypes.string,
-  setNumber: PropTypes.number,
+  setPos: PropTypes.number,
   weight: PropTypes.string,
   reps: PropTypes.string,
-  exerciseID: PropTypes.string
+  exerciseID: PropTypes.string,
+  noOfSets: PropTypes.number
 }
 
 export default Set;
