@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { addSet } from '../actions';
+import { addSet, addCheckedCheckboxID } from '../actions';
 import addSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
@@ -85,7 +85,9 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
         <label className='checkbox'>
           <input
             type='checkbox'
-            name='exerciseCheckboxCheckedList'
+            onChange={(event) => {
+              dispatch(addCheckedCheckboxID(event.target.checked, 'exerciseCheckedList', exerciseID));
+            }}
           />
           <span></span>
         </label>
