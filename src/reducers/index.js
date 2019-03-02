@@ -6,7 +6,7 @@ import checkboxCheckedListReducer from './checkbox-checked-list-reducer';
 const rootReducer = combineReducers({
   masterWorkoutList: workoutListReducer,
   newWorkoutMasterExerciseList: newWorkoutExerciseListReducer,
-  checkboxCheckedListReducer: checkboxCheckedListReducer
+  checkboxCheckedLists: checkboxCheckedListReducer
 });
 
 export default rootReducer;
