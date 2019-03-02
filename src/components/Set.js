@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addCheckedCheckboxID } from '../actions';
 
-function Set({ setID, setPos, weight, reps, exerciseID, noOfSets }) {
+function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
 
   const setStyles = {
     display: 'flex',
@@ -50,7 +52,9 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets }) {
     <label className='checkbox' style={setCheckBoxStyles}>
       <input
         type='checkbox'
-        name='setCheckboxCheckedList'
+        onChange={(event) => {
+          dispatch(addCheckedCheckboxID(event.target.checked, 'setCheckedList', setID));
+        }}
       />
       <span></span>
     </label>;
@@ -92,4 +96,4 @@ Set.propTypes = {
   noOfSets: PropTypes.number
 }
 
-export default Set;
+export default connect()(Set);
