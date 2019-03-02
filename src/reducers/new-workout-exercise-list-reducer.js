@@ -27,7 +27,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -47,10 +47,11 @@ export default (state = initialState, action) => {
       }
       const newMasterExerciseList = [...state.masterExerciseList, newExercise];
       const newState = Object.assign({}, state, {
-        masterExerciseList: newMasterExerciseList
+        masterExerciseList: [...newMasterExerciseList]
       });
       return newState;
     }
+
     case c.ADD_SET: {
       const newMasterExerciseList = state.masterExerciseList.map((exercise) => {
         if(exercise.exerciseID === addedSetExerciseID) {
@@ -68,12 +69,35 @@ export default (state = initialState, action) => {
         }
         return exercise;
       });
-      console.log(newMasterExerciseList);
       const newState = Object.assign({}, state, {
-        masterExerciseList: newMasterExerciseList
+        masterExerciseList: [...newMasterExerciseList]
       });
       return newState;
     }
+
+    case c.DELETE_CHECKED: {
+      let newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
+        if(!checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID)) {
+          return exercise
+        }
+      });
+      newMasterExerciseList = newMasterExerciseList.map((exercise) => {
+        const newSetList = exercise.setList.filter((set) => {
+          if(!checkboxCheckedLists.setCheckedList.includes(set.setID)) {
+            return set;
+          }
+        });
+        let newExercise = Object.assign({}, exercise, {
+          setList: [...newSetList]
+        });
+        return newExercise;
+      });
+      const newState = Object.assign({}, state, {
+        masterExerciseList: [...newMasterExerciseList]
+      });
+      return newState;
+    }
+
     default:
       return state;
   }
