@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { deleteChecked } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header(props) {
+function Header({ dispatch, checkboxCheckedLists }) {
 
   const headerStyles = {
     width: '100%',
@@ -61,10 +62,23 @@ function Header(props) {
           <img src={archiveIcon} alt='Archive Icon' style={exerciseArchiveIconStyles}/>
         </Link>
         <img src={finishIcon} alt='Finish Icon' style={finishIconStyles}/>
-        <img src={deleteIcon} alt='Delete Icon' style={deleteIconStyles}/>
+        <img
+          src={deleteIcon}
+          alt='Delete Icon'
+          style={deleteIconStyles}
+          onClick={() => {
+            dispatch(deleteChecked(checkboxCheckedLists));
+          }}
+        />
       </div>
     </div>
   );
 }
 
-export default connect()(Header);
+const mapStateToProps = (state) => {
+  return {
+    checkboxCheckedLists: state.checkboxCheckedLists
+  }
+}
+
+export default connect(mapStateToProps)(Header);
