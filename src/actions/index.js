@@ -12,3 +12,10 @@ export const addSet = (addedSetExerciseID, addedSetID) => ({
   addedSetExerciseID: addedSetExerciseID,
   addedSetID: addedSetID
 })
+
+export const addCheckedCheckboxID = (ifChecked, whichInputTypeChecked, inputID) => ({
+  type: c.ADD_CHECKED_CHECKBOX_ID,
+  ifChecked: ifChecked,
+  whichInputTypeChecked: whichInputTypeChecked,
+  inputID: inputID
+})
