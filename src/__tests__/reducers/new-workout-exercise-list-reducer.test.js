@@ -116,4 +116,77 @@ describe('newWorkoutExerciseListReducer', () => {
     );
   });
 
+  test('Should successfully delete exercises and or also sets which are checked', () => {
+    const startingState = {
+      workoutTitleInput: '',
+      workoutDateInput: '',
+      workoutNotesInput: '',
+      masterExerciseList: [
+        {
+          exerciseID: '1234',
+          exerciseNumber: 1,
+          exerciseName: '',
+          setList: [
+            {
+              setID: 'ABCD',
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            },
+            {
+              setID: 'EFGH',
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            }
+          ]
+        },
+        {
+          exerciseID: '5678',
+          exerciseNumber: 2,
+          exerciseName: '',
+          setList: [
+            {
+              setID: 'IJKL',
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            }
+          ]
+        }
+      ]
+    };
+    const startingCheckboxState = {
+      workoutCheckedList: [],
+      exerciseCheckedList: ['5678'],
+      setCheckedList: ['EFGH']
+    }
+    action = {
+      type: c.DELETE_CHECKED,
+      checkboxCheckedLists: startingCheckboxState
+    }
+    expect(newWorkoutExerciseListReducer(startingState, action)).toEqual(
+      {
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: '1234',
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: 'ABCD',
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
 });
