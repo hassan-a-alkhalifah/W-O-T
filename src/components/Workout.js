@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import { addExercise, handleExerciseNotesDisplay } from '../actions';
+import { addExercise, handleExerciseNotesDisplay, handleInputChange } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import addExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
@@ -71,6 +71,9 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
       placeholder='Enter Workout Notes'
       name='workoutNotesInput'
       style={workoutNotesInputStyles}
+      onChange={(event) => {
+        dispatch(handleInputChange('workout', event.target.name, event.target.value));
+      }}
     ></textarea>;
   }
 
@@ -84,6 +87,9 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
             placeholder='Enter Workout Title'
             name='workoutTitleInput'
             style={Object.assign({}, workoutInputStyles, workoutTitleInputStyles)}
+            onChange={(event) => {
+              dispatch(handleInputChange('workout', event.target.name, event.target.value));
+            }}
           />
           <img
             src={noteIcon}
@@ -99,6 +105,9 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
           placeholder='date'
           name='dateInput'
           style={workoutInputStyles}
+          onChange={(event) => {
+            dispatch(handleInputChange('workout', event.target.name, event.target.value));
+          }}
         />
       {workoutNotesInput}
       </div>
