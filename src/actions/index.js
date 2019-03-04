@@ -24,3 +24,7 @@ export const deleteChecked = (checkboxCheckedLists) => ({
   type: c.DELETE_CHECKED,
   checkboxCheckedLists: checkboxCheckedLists
 });
+
+export const handleExerciseNotesDisplay = () => ({
+  type: c.CHANGE_EXERCISE_DISPLAY
+});

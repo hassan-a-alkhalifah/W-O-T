@@ -47,7 +47,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props.newWorkoutMasterExerciseList);
     return (
       <div>
         <Header />
