@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import { addExercise } from '../actions';
+import { addExercise, handleExerciseNotesDisplay } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import addExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch, currentWorkoutNoOfExercise }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -47,7 +47,6 @@ function Workout({ dispatch, currentWorkoutNoOfExercise }) {
     cursor: 'pointer'
   }
   const workoutNotesInputStyles = {
-    display: 'none',
     width: '172px',
     padding: '13px',
     marginTop: '12px',
@@ -63,6 +62,17 @@ function Workout({ dispatch, currentWorkoutNoOfExercise }) {
     height: '40px',
     cursor: 'pointer'
   }
+  let workoutNotesInput = null;
+  if(workoutNotes) {
+    workoutNotesInput =
+    <textarea
+      rows='4'
+      cols='27'
+      placeholder='Enter Workout Notes'
+      name='workoutNotesInput'
+      style={workoutNotesInputStyles}
+    ></textarea>;
+  }
 
   return(
     <div style={workoutStyles}>
@@ -75,7 +85,14 @@ function Workout({ dispatch, currentWorkoutNoOfExercise }) {
             name='workoutTitleInput'
             style={Object.assign({}, workoutInputStyles, workoutTitleInputStyles)}
           />
-          <img src={noteIcon} alt='Note Icon' style={noteIconStyles}/>
+          <img
+            src={noteIcon}
+            alt='Note Icon'
+            style={noteIconStyles}
+            onClick={() => {
+              dispatch(handleExerciseNotesDisplay());
+            }}
+          />
         </div>
         <input
           type='date'
@@ -83,13 +100,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise }) {
           name='dateInput'
           style={workoutInputStyles}
         />
-        <textarea
-          rows='4'
-          cols='27'
-          placeholder='Enter Workout Notes'
-          name='workoutNotesInput'
-          style={workoutNotesInputStyles}
-        ></textarea>
+      {workoutNotesInput}
       </div>
       <ExerciseList />
       <div style={addExerciseIconWrapperStyles}>
@@ -108,4 +119,10 @@ function Workout({ dispatch, currentWorkoutNoOfExercise }) {
   );
 }
 
-export default connect()(Workout);
+const mapStateToProps = (state) => {
+  return {
+    workoutNotes: state.workoutNotes.exerciseNotesShown
+  }
+}
+
+export default connect(mapStateToProps)(Workout);
