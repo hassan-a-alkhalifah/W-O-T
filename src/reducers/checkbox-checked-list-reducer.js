@@ -30,6 +30,10 @@ export default (state = initialState, action) => {
         return newState;
       }
     }
+    case c.EMPTY_CHECKED_LISTS: {
+      const newState = {...state, workoutCheckedList: [], exerciseCheckedList: [], setCheckedList: []};
+      return newState;
+    }
     default: {
       return state;
     }
