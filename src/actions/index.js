@@ -32,3 +32,10 @@ export const handleExerciseNotesDisplay = () => ({
 export const handleEmptyCheckedLists = () => ({
   type: c.EMPTY_CHECKED_LISTS
 });
+
+export const handleInputChange = (sectionName, inputName, inputValue) => ({
+  type: c.STORE_INPUT_VALUE,
+  sectionName: sectionName,
+  inputName: inputName,
+  inputValue: inputValue
+});
