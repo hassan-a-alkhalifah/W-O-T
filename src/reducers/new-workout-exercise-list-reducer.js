@@ -27,7 +27,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -95,6 +95,11 @@ export default (state = initialState, action) => {
       const newState = Object.assign({}, state, {
         masterExerciseList: [...newMasterExerciseList]
       });
+      return newState;
+    }
+    case c.STORE_INPUT_VALUE: {
+      let newState = null;
+      sectionName === 'workout' ? newState = {...state, [inputName]: inputValue} : newState = {...state};
       return newState;
     }
 
