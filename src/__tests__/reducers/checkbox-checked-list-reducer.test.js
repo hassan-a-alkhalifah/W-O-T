@@ -47,4 +47,22 @@ describe('checkboxCheckedListReducer', () => {
     );
   });
 
+  test('Should empty all checked list arrays', () => {
+    const currentState = {
+      workoutCheckedList: ['1234'],
+      exerciseCheckedList: ['5678'],
+      setCheckedList: ['9101112']
+    };
+    action = {
+      type: c.EMPTY_CHECKED_LISTS
+    }
+    expect(checkboxCheckedListReducer(currentState, action)).toEqual(
+      {
+        workoutCheckedList: [],
+        exerciseCheckedList: [],
+        setCheckedList: []
+      }
+    );
+  });
+
 });
