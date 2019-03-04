@@ -189,4 +189,35 @@ describe('newWorkoutExerciseListReducer', () => {
     );
   });
 
+  test('Should store workout input value', () => {
+    action = {
+      type: c.STORE_INPUT_VALUE,
+      sectionName: 'workout',
+      inputName: 'workoutTitleInput',
+      inputValue: 'Title'
+    }
+    expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
+      {
+        workoutTitleInput: 'Title',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: initialExerciseID,
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: initialSetID,
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
 });
