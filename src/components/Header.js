@@ -76,6 +76,11 @@ function Header({ dispatch, checkboxCheckedLists }) {
   );
 }
 
+Header.propTypes = {
+  dispatch: PropTypes.func,
+  checkboxCheckedLists: PropTypes.object
+}
+
 const mapStateToProps = (state) => {
   return {
     checkboxCheckedLists: state.checkboxCheckedLists

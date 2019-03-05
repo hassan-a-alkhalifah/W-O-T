@@ -94,14 +94,14 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
     </div>
   );
 }
-
 Set.propTypes = {
   setID: PropTypes.string,
   setPos: PropTypes.number,
   weight: PropTypes.string,
   reps: PropTypes.string,
   exerciseID: PropTypes.string,
-  noOfSets: PropTypes.number
+  noOfSets: PropTypes.number,
+  dispatch: PropTypes.func
 }
 
 export default connect()(Set);

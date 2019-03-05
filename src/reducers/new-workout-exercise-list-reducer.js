@@ -44,16 +44,11 @@ export default (state = initialState, action) => {
             reps: ''
           }
         ]
-      }
-      const newMasterExerciseList = [...state.masterExerciseList, newExercise];
-      const newState = Object.assign({}, state, {
-        masterExerciseList: [...newMasterExerciseList]
-      });
-      return newState;
+      };
+      return {...state, masterExerciseList: state.masterExerciseList.concat(newExercise)};
     }
-
     case c.ADD_SET: {
-      const newMasterExerciseList = state.masterExerciseList.map((exercise) => {
+      return {...state, masterExerciseList: state.masterExerciseList.map((exercise) => {
         if(exercise.exerciseID === addedSetExerciseID) {
           const nextSetPos = exercise.setList.length + 1;
           const newSet = {
@@ -62,42 +57,26 @@ export default (state = initialState, action) => {
             weight: '',
             reps: ''
           }
-          const newSetList = [...exercise.setList, newSet];
-          exercise = Object.assign({}, exercise, {
-            setList: newSetList
-          });
+          return {...exercise, setList: exercise.setList.concat(newSet)};
+        } else {
+          return exercise;
         }
-        return exercise;
-      });
-      const newState = Object.assign({}, state, {
-        masterExerciseList: [...newMasterExerciseList]
-      });
-      return newState;
+      })};
     }
-
     case c.DELETE_CHECKED: {
-      let newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
+      const newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
         if(!checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID)) {
-          return exercise
+          return exercise;
         }
       });
-      newMasterExerciseList = newMasterExerciseList.map((exercise) => {
-        const newSetList = exercise.setList.filter((set) => {
+      return {...state, masterExerciseList: newMasterExerciseList.map((exercise) => {
+        return {...exercise, setList: exercise.setList.filter((set) => {
           if(!checkboxCheckedLists.setCheckedList.includes(set.setID)) {
             return set;
           }
-        });
-        let newExercise = Object.assign({}, exercise, {
-          setList: [...newSetList]
-        });
-        return newExercise;
-      });
-      const newState = Object.assign({}, state, {
-        masterExerciseList: [...newMasterExerciseList]
-      });
-      return newState;
+        })};
+      })};
     }
-    
     case c.STORE_INPUT_VALUE: {
       if(sectionName === 'workout') {
          return {...state, [inputName]: inputValue};
@@ -125,7 +104,6 @@ export default (state = initialState, action) => {
         })}
       }
     }
-
     default:
       return state;
   }
