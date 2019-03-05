@@ -194,7 +194,9 @@ describe('newWorkoutExerciseListReducer', () => {
       type: c.STORE_INPUT_VALUE,
       sectionName: 'workout',
       inputName: 'workoutTitleInput',
-      inputValue: 'Title'
+      inputValue: 'Title',
+      inputTargetID: null,
+      setExerciseID: null
     }
     expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
       {
@@ -211,6 +213,72 @@ describe('newWorkoutExerciseListReducer', () => {
                 setID: initialSetID,
                 setNumber: 1,
                 weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
+  test('Should store exercise input value', () => {
+    action = {
+      type: c.STORE_INPUT_VALUE,
+      sectionName: 'exercise',
+      inputName: 'exerciseName',
+      inputValue: 'Title',
+      inputTargetID: initialExerciseID,
+      setExerciseID: null
+    }
+    expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
+      {
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: initialExerciseID,
+            exerciseNumber: 1,
+            exerciseName: 'Title',
+            setList: [
+              {
+                setID: initialSetID,
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
+  test('Should store set input value', () => {
+    action = {
+      type: c.STORE_INPUT_VALUE,
+      sectionName: 'set',
+      inputName: 'weight',
+      inputValue: '325',
+      inputTargetID: initialSetID,
+      setExerciseID: initialExerciseID
+    }
+    expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
+      {
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: initialExerciseID,
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: initialSetID,
+                setNumber: 1,
+                weight: '325',
                 reps: ''
               }
             ]

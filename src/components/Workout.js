@@ -103,7 +103,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
         <input
           type='date'
           placeholder='date'
-          name='dateInput'
+          name='workoutDateInput'
           style={workoutInputStyles}
           onChange={(event) => {
             dispatch(handleInputChange('workout', event.target.name, event.target.value));
