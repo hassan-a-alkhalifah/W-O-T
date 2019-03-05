@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteChecked, handleEmptyCheckedLists } from '../actions';
+import { onDeleteChecked, onEmptyCheckedLists } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
@@ -67,8 +67,8 @@ function Header({ dispatch, checkboxCheckedLists }) {
           alt='Delete Icon'
           style={deleteIconStyles}
           onClick={() => {
-            dispatch(deleteChecked(checkboxCheckedLists));
-            dispatch(handleEmptyCheckedLists());
+            dispatch(onDeleteChecked(checkboxCheckedLists));
+            dispatch(onEmptyCheckedLists());
           }}
         />
       </div>

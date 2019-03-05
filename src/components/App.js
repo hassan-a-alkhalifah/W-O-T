@@ -9,43 +9,6 @@ import Footer from './Footer';
 
 class App extends Component {
 
-  constructor() {
-    super();
-    this.initialExerciseID = v4();
-    this.initialSetID = v4();
-    this.state = {
-      workoutTitleInput: '',
-      workoutDateInput: '',
-      workoutNotesInput: '',
-      masterExerciseList: [
-        {
-          exerciseID: this.initialExerciseID,
-          exerciseNumber: 1,
-          exerciseName: '',
-          setList: [
-            {
-              setID: this.initialSetID,
-              setNumber: 1,
-              weight: '',
-              reps: ''
-            }
-          ]
-        }
-      ]
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  handleInputChange(eventType, inputName, inputID, exerciseID) {
-    if(inputName === 'workout') {
-      this.setState({
-        [eventType.target.name]: eventType.target.value
-      }, () => {
-        console.log(this.state);
-      })
-    }
-  }
-
   render() {
     return (
       <div>

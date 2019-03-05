@@ -1,39 +1,39 @@
 import constants from './../constants';
 const { c } = constants;
 
-export const addExercise = (newExerciseID, newSetID) => ({
+export const onAddExercise = (newExerciseID, newSetID) => ({
   type: c.ADD_EXERCISE,
   newExerciseID: newExerciseID,
   newSetID: newSetID
 });
 
-export const addSet = (addedSetExerciseID, addedSetID) => ({
+export const onAddSet = (addedSetExerciseID, addedSetID) => ({
   type: c.ADD_SET,
   addedSetExerciseID: addedSetExerciseID,
   addedSetID: addedSetID
 });
 
-export const addCheckedCheckboxID = (ifChecked, whichInputTypeChecked, inputID) => ({
+export const onAddCheckedCheckboxID = (ifChecked, whichInputTypeChecked, inputID) => ({
   type: c.ADD_CHECKED_CHECKBOX_ID,
   ifChecked: ifChecked,
   whichInputTypeChecked: whichInputTypeChecked,
   inputID: inputID
 });
 
-export const deleteChecked = (checkboxCheckedLists) => ({
+export const onDeleteChecked = (checkboxCheckedLists) => ({
   type: c.DELETE_CHECKED,
   checkboxCheckedLists: checkboxCheckedLists
 });
 
-export const handleExerciseNotesDisplay = () => ({
+export const onExerciseNotesDisplay = () => ({
   type: c.CHANGE_EXERCISE_DISPLAY
 });
 
-export const handleEmptyCheckedLists = () => ({
+export const onEmptyCheckedLists = () => ({
   type: c.EMPTY_CHECKED_LISTS
 });
 
-export const handleInputChange = (sectionName, inputName, inputValue, inputTargetID, setExerciseID) => ({
+export const onInputChange = (sectionName, inputName, inputValue, inputTargetID, setExerciseID) => ({
   type: c.STORE_INPUT_VALUE,
   sectionName: sectionName,
   inputName: inputName,
