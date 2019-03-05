@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addCheckedCheckboxID, handleInputChange } from '../actions';
+import { onAddCheckedCheckboxID, onInputChange } from '../actions';
 
 function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
 
@@ -53,7 +53,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
       <input
         type='checkbox'
         onChange={(event) => {
-          dispatch(addCheckedCheckboxID(event.target.checked, 'setCheckedList', setID));
+          dispatch(onAddCheckedCheckboxID(event.target.checked, 'setCheckedList', setID));
         }}
       />
       <span></span>
@@ -77,7 +77,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
           name='weight'
           style={weightInputStyles}
           onChange={(event) => {
-            dispatch(handleInputChange('set', event.target.name, event.target.value, setID, exerciseID));
+            dispatch(onInputChange('set', event.target.name, event.target.value, setID, exerciseID));
           }}
         />
         <input
@@ -86,7 +86,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
           name='reps'
           style={repsInputStyles}
           onChange={(event) => {
-            dispatch(handleInputChange('set', event.target.name, event.target.value, setID, exerciseID));
+            dispatch(onInputChange('set', event.target.name, event.target.value, setID, exerciseID));
           }}
         />
       </div>

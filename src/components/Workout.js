@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { addExercise, handleExerciseNotesDisplay, handleInputChange } from '../actions';
+import { onAddExercise, onExerciseNotesDisplay, onInputChange } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
-import addExerciseIcon from '../assets/images/add-exercise-icon.png';
+import onAddExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
@@ -73,7 +73,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
       name='workoutNotesInput'
       style={workoutNotesInputStyles}
       onChange={(event) => {
-        dispatch(handleInputChange('workout', event.target.name, event.target.value));
+        dispatch(onInputChange('workout', event.target.name, event.target.value));
       }}
     ></textarea>;
   }
@@ -89,7 +89,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
             name='workoutTitleInput'
             style={Object.assign({}, workoutInputStyles, workoutTitleInputStyles)}
             onChange={(event) => {
-              dispatch(handleInputChange('workout', event.target.name, event.target.value));
+              dispatch(onInputChange('workout', event.target.name, event.target.value));
             }}
           />
           <img
@@ -97,7 +97,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
             alt='Note Icon'
             style={noteIconStyles}
             onClick={() => {
-              dispatch(handleExerciseNotesDisplay());
+              dispatch(onExerciseNotesDisplay());
             }}
           />
         </div>
@@ -107,7 +107,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
           name='workoutDateInput'
           style={workoutInputStyles}
           onChange={(event) => {
-            dispatch(handleInputChange('workout', event.target.name, event.target.value));
+            dispatch(onInputChange('workout', event.target.name, event.target.value));
           }}
         />
       {workoutNotesInput}
@@ -115,13 +115,13 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
       <ExerciseList />
       <div style={addExerciseIconWrapperStyles}>
         <img
-          src={addExerciseIcon}
+          src={onAddExerciseIcon}
           alt='Add Exercise Icon'
           style={addExerciseIconStyles}
           onClick={() => {
             const newExerciseID = v4();
             const newSetID = v4();
-            dispatch(addExercise(newExerciseID, newSetID));
+            dispatch(onAddExercise(newExerciseID, newSetID));
           }}
         />
       </div>
