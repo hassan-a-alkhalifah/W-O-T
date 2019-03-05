@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addCheckedCheckboxID } from '../actions';
+import { addCheckedCheckboxID, handleInputChange } from '../actions';
 
 function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
 
@@ -74,12 +74,20 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
         <input
           className="weightInput"
           type="number"
+          name='weight'
           style={weightInputStyles}
+          onChange={(event) => {
+            dispatch(handleInputChange('set', event.target.name, event.target.value, setID, exerciseID));
+          }}
         />
         <input
           className="repInput"
           type="number"
+          name='reps'
           style={repsInputStyles}
+          onChange={(event) => {
+            dispatch(handleInputChange('set', event.target.name, event.target.value, setID, exerciseID));
+          }}
         />
       </div>
       {ifNotFirstSetCheckbox}
