@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
+import PropTypes from 'prop-types';
 import { addExercise, handleExerciseNotesDisplay, handleInputChange } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import addExerciseIcon from '../assets/images/add-exercise-icon.png';
@@ -126,6 +127,12 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
       </div>
     </div>
   );
+}
+
+Workout.propTypes = {
+  dispatch: PropTypes.func,
+  currentWorkoutNoOfExercise: PropTypes.number,
+  workoutNotes: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {

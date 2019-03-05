@@ -130,7 +130,8 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
 Exercise.propTypes = {
   exerciseID: PropTypes.string,
   exerciseName: PropTypes.string,
-  setList: PropTypes.array
+  setList: PropTypes.array,
+  dispatch: PropTypes.func
 }
 
 export default connect()(Exercise);
