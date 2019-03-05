@@ -13,26 +13,14 @@ export default (state = initialState, action) => {
 
   switch(action.type) {
     case c.ADD_CHECKED_CHECKBOX_ID: {
-      let newState = null;
       if(ifChecked) {
-        if(!state[whichInputTypeChecked].includes(inputID)) {
-          newState = Object.assign({}, state, {
-            [whichInputTypeChecked]: [...state[whichInputTypeChecked], inputID]
-          });
-          return newState;
-        } else {
-          return state;
-        }
+        return {...state, [whichInputTypeChecked]: state[whichInputTypeChecked].concat(inputID)};
       } else {
-        newState = Object.assign({}, state, {
-          [whichInputTypeChecked]: state[whichInputTypeChecked].filter((id)=>id !== inputID)
-        });
-        return newState;
+        return {...state, [whichInputTypeChecked]: state[whichInputTypeChecked].filter((id)=>id !== inputID)};
       }
     }
     case c.EMPTY_CHECKED_LISTS: {
-      const newState = {...state, workoutCheckedList: [], exerciseCheckedList: [], setCheckedList: []};
-      return newState;
+      return {...state, workoutCheckedList: [], exerciseCheckedList: [], setCheckedList: []};
     }
     default: {
       return state;

@@ -9,9 +9,11 @@ export default (state = initialState, action) => {
 
   switch(action.type) {
     case c.CHANGE_EXERCISE_DISPLAY: {
-      let newState = null;
-      state.exerciseNotesShown ? newState = {...state, exerciseNotesShown: false} : newState = {...state, exerciseNotesShown: true};
-      return newState;
+      if(state.exerciseNotesShown) {
+        return {...state, exerciseNotesShown: false}
+      } else {
+        return {...state, exerciseNotesShown: true};
+      }
     }
     default: {
       return state;
