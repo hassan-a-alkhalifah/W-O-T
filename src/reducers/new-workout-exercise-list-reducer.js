@@ -27,7 +27,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue, inputTargetID, setExerciseID } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -97,10 +97,33 @@ export default (state = initialState, action) => {
       });
       return newState;
     }
+    
     case c.STORE_INPUT_VALUE: {
-      let newState = null;
-      sectionName === 'workout' ? newState = {...state, [inputName]: inputValue} : newState = {...state};
-      return newState;
+      if(sectionName === 'workout') {
+         return {...state, [inputName]: inputValue};
+      } else if(sectionName === 'exercise') {
+        return {...state, masterExerciseList: state.masterExerciseList.map((exercise) => {
+          if(exercise.exerciseID === inputTargetID) {
+            return {...exercise, [inputName]: inputValue};
+          } else {
+            return exercise;
+          }
+        })}
+      } else {
+        return {...state, masterExerciseList: state.masterExerciseList.map((exercise) => {
+          if(exercise.exerciseID === setExerciseID) {
+            return {...exercise, setList: exercise.setList.map((set) => {
+              if(set.setID === inputTargetID) {
+                return {...set, [inputName]: inputValue};
+              } else {
+                return set;
+              }
+            })};
+          } else {
+            return exercise;
+          }
+        })}
+      }
     }
 
     default:
