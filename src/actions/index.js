@@ -33,9 +33,11 @@ export const handleEmptyCheckedLists = () => ({
   type: c.EMPTY_CHECKED_LISTS
 });
 
-export const handleInputChange = (sectionName, inputName, inputValue) => ({
+export const handleInputChange = (sectionName, inputName, inputValue, inputTargetID, setExerciseID) => ({
   type: c.STORE_INPUT_VALUE,
   sectionName: sectionName,
   inputName: inputName,
-  inputValue: inputValue
+  inputValue: inputValue,
+  inputTargetID: inputTargetID,
+  setExerciseID: setExerciseID
 });
