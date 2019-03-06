@@ -65,15 +65,11 @@ export default (state = initialState, action) => {
     }
     case c.DELETE_CHECKED: {
       const newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
-        if(!checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID)) {
-          return exercise;
-        }
+        return !checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID);
       });
       return {...state, masterExerciseList: newMasterExerciseList.map((exercise) => {
         return {...exercise, setList: exercise.setList.filter((set) => {
-          if(!checkboxCheckedLists.setCheckedList.includes(set.setID)) {
-            return set;
-          }
+          return !checkboxCheckedLists.setCheckedList.includes(set.setID);
         })};
       })};
     }
