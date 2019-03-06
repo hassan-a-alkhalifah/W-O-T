@@ -288,4 +288,34 @@ describe('newWorkoutExerciseListReducer', () => {
     );
   });
 
+  test('Should successfully reset workout object content', () => {
+    action = {
+      type: c.RESET_WORKOUT_FORM,
+      resettedExerciseID: 'ABCD',
+      resettedSetID: 'EFGH'
+    }
+    expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
+      {
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: 'ABCD',
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: 'EFGH',
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
 });
