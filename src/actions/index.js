@@ -42,7 +42,12 @@ export const onInputChange = (sectionName, inputName, inputValue, inputTargetID,
   setExerciseID: setExerciseID
 });
 
-export const onIconStateChange = (iconType) => ({
-  type: c.ICON_STATE_CHANGE,
-  iconType: iconType
+export const pageStateChange = () => ({
+  type: c.PAGE_STATE_CHANGE
+});
+
+export const onResetWorkoutForm = (resettedExerciseID, resettedSetID) => ({
+  type: c.RESET_WORKOUT_FORM,
+  resettedExerciseID: resettedExerciseID,
+  resettedSetID: resettedSetID
 });

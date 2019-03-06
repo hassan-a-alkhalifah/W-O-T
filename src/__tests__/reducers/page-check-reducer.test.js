@@ -1,4 +1,4 @@
-import menuIconsReducer from './../../reducers/menu-icons-reducer';
+import pageCheckReducer from './../../reducers/page-check-reducer';
 import constants from './../../constants';
 
 const { c } = constants;
@@ -9,10 +9,10 @@ const initialState = {
   deleteicon: false
 };
 
-describe('menuIconsReducer', () => {
+describe('pageCheckReducer', () => {
 
   test('Should return default state if no action type is recognized', () => {
-    expect(menuIconsReducer(initialState, { type:null})).toEqual(initialState);
+    expect(pageCheckReducer(initialState, { type:null})).toEqual(initialState);
   });
 
 });

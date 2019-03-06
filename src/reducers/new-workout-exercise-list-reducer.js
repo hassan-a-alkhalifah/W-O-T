@@ -27,7 +27,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue, inputTargetID, setExerciseID } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue, inputTargetID, setExerciseID, resettedExerciseID, resettedSetID } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -99,6 +99,29 @@ export default (state = initialState, action) => {
           }
         })}
       }
+    }
+    case c.RESET_WORKOUT_FORM: {
+      return {
+        ...state,
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: resettedExerciseID,
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: resettedSetID,
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      };
     }
     default:
       return state;

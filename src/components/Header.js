@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { onDeleteChecked, onEmptyCheckedLists } from '../actions';
+import { v4 } from 'uuid';
+import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage }) {
 
   const headerStyles = {
     width: '100%',
@@ -70,7 +71,17 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked }) {
       </div>
       <div style={headerIconsWrapperStyles}>
         <Link to='/'>
-          <img src={homeIcon} alt='Home Icon' style={homeIconStyles}/>
+          <img src={homeIcon}
+            alt='Home Icon'
+            style={homeIconStyles}
+            onClick={() => {
+              if(homePage) {
+                const resettedExerciseID = v4();
+                const resettedSetID = v4();
+                dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+              }
+            }}
+          />
         </Link>
         <Link to='/exerciseArchive'>
           <img src={archiveIcon} alt='Archive Icon' style={exerciseArchiveIconStyles}/>
@@ -85,7 +96,8 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked }) {
 Header.propTypes = {
   dispatch: PropTypes.func,
   checkboxCheckedLists: PropTypes.object,
-  ifAnyCheckboxIsChecked: PropTypes.bool
+  ifAnyCheckboxIsChecked: PropTypes.bool,
+  homepage: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
@@ -97,7 +109,8 @@ const mapStateToProps = (state) => {
   });
   return {
     checkboxCheckedLists: state.checkboxCheckedLists,
-    ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked
+    ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
+    homePage: state.pagesState.homePage
   }
 }
 
