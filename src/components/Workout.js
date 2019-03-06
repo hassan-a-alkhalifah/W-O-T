@@ -9,7 +9,7 @@ import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -64,7 +64,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
     cursor: 'pointer'
   }
   let workoutNotesInput = null;
-  if(workoutNotes) {
+  if(workoutNotesState) {
     workoutNotesInput =
     <textarea
       rows='4'
@@ -75,6 +75,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
       onChange={(event) => {
         dispatch(onInputChange('workout', event.target.name, event.target.value));
       }}
+      value={workoutNotes}
     ></textarea>;
   }
 
@@ -132,12 +133,15 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotes }) {
 Workout.propTypes = {
   dispatch: PropTypes.func,
   currentWorkoutNoOfExercise: PropTypes.number,
-  workoutNotes: PropTypes.bool
+  workoutNotesState: PropTypes.bool,
+  workoutNotes: PropTypes.string
 }
 
 const mapStateToProps = (state) => {
   return {
-    workoutNotes: state.workoutNotes.exerciseNotesShown
+    workoutNotesState: state.workoutNotesState.exerciseNotesShown,
+    workoutNotes: state.newWorkoutMasterExerciseList.workoutNotesInput
+
   }
 }
 
