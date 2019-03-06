@@ -41,3 +41,8 @@ export const onInputChange = (sectionName, inputName, inputValue, inputTargetID,
   inputTargetID: inputTargetID,
   setExerciseID: setExerciseID
 });
+
+export const onIconStateChange = (iconType) => ({
+  type: c.ICON_STATE_CHANGE,
+  iconType: iconType
+});

@@ -8,7 +8,7 @@ import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked }) {
 
   const headerStyles = {
     width: '100%',
@@ -49,6 +49,20 @@ function Header({ dispatch, checkboxCheckedLists }) {
     cursor: 'pointer'
   }
 
+  let deleteIconTag = null;
+  if(ifAnyCheckboxIsChecked) {
+    deleteIconTag =
+    <img
+      src={deleteIcon}
+      alt='Delete Icon'
+      style={deleteIconStyles}
+      onClick={() => {
+        dispatch(onDeleteChecked(checkboxCheckedLists));
+        dispatch(onEmptyCheckedLists());
+      }}
+    />;
+  }
+
   return(
     <div style={headerStyles}>
       <div style={headerTitleWrapperStyles}>
@@ -62,15 +76,7 @@ function Header({ dispatch, checkboxCheckedLists }) {
           <img src={archiveIcon} alt='Archive Icon' style={exerciseArchiveIconStyles}/>
         </Link>
         <img src={finishIcon} alt='Finish Icon' style={finishIconStyles}/>
-        <img
-          src={deleteIcon}
-          alt='Delete Icon'
-          style={deleteIconStyles}
-          onClick={() => {
-            dispatch(onDeleteChecked(checkboxCheckedLists));
-            dispatch(onEmptyCheckedLists());
-          }}
-        />
+        {deleteIconTag}
       </div>
     </div>
   );
@@ -78,12 +84,20 @@ function Header({ dispatch, checkboxCheckedLists }) {
 
 Header.propTypes = {
   dispatch: PropTypes.func,
-  checkboxCheckedLists: PropTypes.object
+  checkboxCheckedLists: PropTypes.object,
+  ifAnyCheckboxIsChecked: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
+  let ifAnyCheckboxIsChecked = false;
+  Object.values(state.checkboxCheckedLists).map((checkboxList) => {
+    if(checkboxList.length > 0) {
+      ifAnyCheckboxIsChecked = true;
+    }
+  });
   return {
-    checkboxCheckedLists: state.checkboxCheckedLists
+    checkboxCheckedLists: state.checkboxCheckedLists,
+    ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked
   }
 }
 
