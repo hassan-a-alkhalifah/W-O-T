@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   masterWorkoutList: workoutListReducer,
   newWorkoutMasterExerciseList: newWorkoutExerciseListReducer,
   checkboxCheckedLists: checkboxCheckedListReducer,
-  workoutNotes: workoutNotesReducer
+  workoutNotesState: workoutNotesReducer
 });
 
 export default rootReducer;
