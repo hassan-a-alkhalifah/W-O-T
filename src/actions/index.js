@@ -51,3 +51,8 @@ export const onResetWorkoutForm = (resettedExerciseID, resettedSetID) => ({
   resettedExerciseID: resettedExerciseID,
   resettedSetID: resettedSetID
 });
+
+export const onChangePageState = (pageType) => ({
+  type: c.CHANGE_PAGE_STATE,
+  pageType: pageType
+});
