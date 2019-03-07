@@ -8,9 +8,15 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
+  const { pageType } = action;
+
   switch(action.type) {
-    case c.PAGE_STATE_CHANGE: {
-      return state;
+    case c.CHANGE_PAGE_STATE: {
+      if(pageType === 'archive') {
+        return {...state, homePage: false, archivePage: true};
+      } else {
+        return {...state, homePage: true, archivePage: false};
+      }
     }
     default: {
       return state;
