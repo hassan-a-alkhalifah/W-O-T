@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm } from '../actions';
+import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm, onChangePageState } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage }) {
 
   const headerStyles = {
     width: '100%',
@@ -50,6 +50,27 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
     cursor: 'pointer'
   }
 
+  let archiveIconTag = null;
+  let finishIconTag = null;
+  if(!archivePage) {
+    archiveIconTag =
+    <Link to='/exerciseArchive'>
+      <img
+        src={archiveIcon}
+        alt='Archive Icon'
+        style={exerciseArchiveIconStyles}
+        onClick={() => {
+          const resettedExerciseID = v4();
+          const resettedSetID = v4();
+          dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+          dispatch(onChangePageState('archive'));
+        }}
+      />
+  </Link>;
+  finishIconTag =
+  <img src={finishIcon} alt='Finish Icon' style={finishIconStyles}/>;
+  }
+
   let deleteIconTag = null;
   if(ifAnyCheckboxIsChecked) {
     deleteIconTag =
@@ -71,7 +92,8 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
       </div>
       <div style={headerIconsWrapperStyles}>
         <Link to='/'>
-          <img src={homeIcon}
+          <img
+            src={homeIcon}
             alt='Home Icon'
             style={homeIconStyles}
             onClick={() => {
@@ -79,14 +101,14 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
                 const resettedExerciseID = v4();
                 const resettedSetID = v4();
                 dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+              } else {
+                dispatch(onChangePageState('home'));
               }
             }}
           />
         </Link>
-        <Link to='/exerciseArchive'>
-          <img src={archiveIcon} alt='Archive Icon' style={exerciseArchiveIconStyles}/>
-        </Link>
-        <img src={finishIcon} alt='Finish Icon' style={finishIconStyles}/>
+        {archiveIconTag}
+        {finishIconTag}
         {deleteIconTag}
       </div>
     </div>
@@ -97,7 +119,8 @@ Header.propTypes = {
   dispatch: PropTypes.func,
   checkboxCheckedLists: PropTypes.object,
   ifAnyCheckboxIsChecked: PropTypes.bool,
-  homepage: PropTypes.bool
+  homepage: PropTypes.bool,
+  archivePage: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
@@ -110,7 +133,8 @@ const mapStateToProps = (state) => {
   return {
     checkboxCheckedLists: state.checkboxCheckedLists,
     ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
-    homePage: state.pagesState.homePage
+    homePage: state.pagesState.homePage,
+    archivePage: state.pagesState.archivePage
   }
 }
 
