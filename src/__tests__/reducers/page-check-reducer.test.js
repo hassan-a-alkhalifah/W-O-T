@@ -14,7 +14,7 @@ describe('pageCheckReducer', () => {
     expect(pageCheckReducer(initialState, { type:null})).toEqual(initialState);
   });
 
-  test('Should successfully  change state boolean values', () => {
+  test('Should successfully change state boolean values', () => {
     action = {
       type: c.CHANGE_PAGE_STATE,
       pageType: 'archive'
