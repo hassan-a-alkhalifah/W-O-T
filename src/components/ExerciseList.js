@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Exercise from './Exercise';
 
-function ExerciseList({ newExerciseList }) {
+function ExerciseList({ newExerciseList, noOfExercises }) {
 
   const exerciseListStyles = {
     display: 'flex',
@@ -22,6 +22,7 @@ function ExerciseList({ newExerciseList }) {
               exerciseID={exercise.exerciseID}
               exerciseName={exercise.exerciseName}
               setList={exercise.setList}
+              noOfExercises={noOfExercises}
             />
           );
         })
@@ -31,12 +32,14 @@ function ExerciseList({ newExerciseList }) {
 }
 
 ExerciseList.propTypes = {
-  newExerciseList: PropTypes.array
+  newExerciseList: PropTypes.array,
+  noOfExercises: PropTypes.number
 }
 
 const mapStateToProps = (state) => {
   return {
-    newExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList
+    newExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList,
+    noOfExercises: state.newWorkoutMasterExerciseList.masterExerciseList.length
   }
 }
 

@@ -47,7 +47,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
   let ifNotFirstSetCheckbox = null;
   let ifNotFirstSetSpacer = null;
 
-  if(setPos !== 1) {
+  if(noOfSets !== 1) {
     ifNotFirstSetCheckbox =
     <label className='checkbox' style={setCheckBoxStyles}>
       <input
@@ -58,10 +58,8 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
       />
       <span></span>
     </label>;
-  }
-  if(noOfSets !== 1) {
     ifNotFirstSetSpacer =
-    <div style={setWrapperSpacerStyles}></div>
+    <div style={setWrapperSpacerStyles}></div>;
   }
 
   return(
@@ -73,7 +71,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
         </div>
         <input
           className="weightInput"
-          type="number"
+          type="text"
           name='weight'
           style={weightInputStyles}
           onChange={(event) => {
@@ -82,7 +80,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
         />
         <input
           className="repInput"
-          type="number"
+          type="text"
           name='reps'
           style={repsInputStyles}
           onChange={(event) => {

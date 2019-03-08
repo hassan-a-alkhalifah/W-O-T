@@ -6,7 +6,7 @@ import { onAddSet, onAddCheckedCheckboxID, onInputChange, onIconStateChange } fr
 import onAddSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
-function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
+function Exercise({ exerciseID, exerciseName, setList, dispatch, noOfExercises }) {
 
   const exerciseStyles = {
     display: 'flex',
@@ -26,8 +26,7 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
     width: '185px',
     height: '34px',
     paddingLeft: '13px',
-    border: '1px solid #3498DB',
-    marginRight: '12px'
+    border: '1px solid #3498DB'
   }
   const exerciseLabelsWrapperStyles = {
     width: '198px',
@@ -58,6 +57,9 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
   const exerciseLabelsStyles = {
     fontWeight: '400'
   }
+  const exerciseCheckBoxStyles = {
+    marginLeft: '12px'
+  }
   const addSetIconWrapperStyles = {
     display: 'flex',
     justifyContent: 'center',
@@ -73,10 +75,28 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
     cursor: 'pointer'
   }
 
+  let ifNotFirstExerciseCheckbox = null;
+  let ifNotFirstExerciseSpacer = null;
+
+  if(noOfExercises !== 1) {
+    ifNotFirstExerciseCheckbox =
+    <label className='checkbox' style={exerciseCheckBoxStyles}>
+      <input
+        type='checkbox'
+        onChange={(event) => {
+          dispatch(onAddCheckedCheckboxID(event.target.checked, 'exerciseCheckedList', exerciseID));
+        }}
+      />
+      <span></span>
+    </label>;
+    ifNotFirstExerciseSpacer =
+    <div style={exerciseNameInputSpacerStyles}></div>;
+  }
+
   return(
     <div style={exerciseStyles}>
       <div style={exerciseNameInputWrapperStyles}>
-        <div style={exerciseNameInputSpacerStyles}></div>
+        {ifNotFirstExerciseSpacer}
         <input
           type='text'
           placeholder='Enter Exercise Name'
@@ -86,15 +106,7 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch }) {
             dispatch(onInputChange('exercise', event.target.name, event.target.value, exerciseID));
           }}
         />
-        <label className='checkbox'>
-          <input
-            type='checkbox'
-            onChange={(event) => {
-              dispatch(onAddCheckedCheckboxID(event.target.checked, 'exerciseCheckedList', exerciseID));
-            }}
-          />
-          <span></span>
-        </label>
+      {ifNotFirstExerciseCheckbox}
       </div>
       <div style={exerciseLabelsWrapperStyles}>
         <div style={Object.assign({}, labelsWrapperStyles, setsLabelWrapperStyles)}>
@@ -132,6 +144,7 @@ Exercise.propTypes = {
   exerciseName: PropTypes.string,
   setList: PropTypes.array,
   dispatch: PropTypes.func,
+  noOfExercises: PropTypes.number
 }
 
 export default connect()(Exercise);

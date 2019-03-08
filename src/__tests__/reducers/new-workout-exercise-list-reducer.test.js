@@ -161,9 +161,11 @@ describe('newWorkoutExerciseListReducer', () => {
       exerciseCheckedList: ['5678'],
       setCheckedList: ['EFGH']
     }
+    const resettedSetID = v4();
     action = {
       type: c.DELETE_CHECKED,
-      checkboxCheckedLists: startingCheckboxState
+      checkboxCheckedLists: startingCheckboxState,
+      resettedSetID: resettedSetID
     }
     expect(newWorkoutExerciseListReducer(startingState, action)).toEqual(
       {
@@ -178,6 +180,68 @@ describe('newWorkoutExerciseListReducer', () => {
             setList: [
               {
                 setID: 'ABCD',
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      }
+    );
+  });
+
+  test('If all sets of current exercise are checked, should successfully delete all sets of current exercise and add one new starting set', () => {
+    const startingState = {
+      workoutTitleInput: '',
+      workoutDateInput: '',
+      workoutNotesInput: '',
+      masterExerciseList: [
+        {
+          exerciseID: initialExerciseID,
+          exerciseNumber: 1,
+          exerciseName: '',
+          setList: [
+            {
+              setID: 'ABCD',
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            },
+            {
+              setID: 'EFGH',
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            }
+          ]
+        }
+      ]
+    };
+    const startingCheckboxState = {
+      workoutCheckedList: [],
+      exerciseCheckedList: [],
+      setCheckedList: ['ABCD', 'EFGH']
+    }
+    const resettedSetID = v4();
+    action = {
+      type: c.DELETE_CHECKED,
+      checkboxCheckedLists: startingCheckboxState,
+      resettedSetID: resettedSetID
+    }
+    expect(newWorkoutExerciseListReducer(startingState, action)).toEqual(
+      {
+        workoutTitleInput: '',
+        workoutDateInput: '',
+        workoutNotesInput: '',
+        masterExerciseList: [
+          {
+            exerciseID: initialExerciseID,
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: resettedSetID,
                 setNumber: 1,
                 weight: '',
                 reps: ''
