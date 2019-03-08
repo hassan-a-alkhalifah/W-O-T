@@ -68,9 +68,28 @@ export default (state = initialState, action) => {
         return !checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID);
       });
       return {...state, masterExerciseList: newMasterExerciseList.map((exercise) => {
-        return {...exercise, setList: exercise.setList.filter((set) => {
-          return !checkboxCheckedLists.setCheckedList.includes(set.setID);
-        })};
+        const currentExerciseSetIDsList = exercise.setList.map((set) => {
+          return set.setID;
+        });
+        const currentExerciseSetIDsCheckedList = currentExerciseSetIDsList.filter((setID) => {
+          return checkboxCheckedLists.setCheckedList.includes(setID);
+        });
+        const noOfCurrentExerciseSetIDsChecked = currentExerciseSetIDsCheckedList.length;
+        const noOfCurrentExerciseSets = exercise.setList.length;
+        if(noOfCurrentExerciseSetIDsChecked === noOfCurrentExerciseSets) {
+          return {...exercise, setList: [
+            {
+              setID: resettedSetID,
+              setNumber: 1,
+              weight: '',
+              reps: ''
+            }
+          ]};
+        } else {
+          return {...exercise, setList: exercise.setList.filter((set) => {
+            return !checkboxCheckedLists.setCheckedList.includes(set.setID);
+          })};
+        }
       })};
     }
     case c.STORE_INPUT_VALUE: {
