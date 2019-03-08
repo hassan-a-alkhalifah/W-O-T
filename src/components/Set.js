@@ -71,7 +71,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
         </div>
         <input
           className="weightInput"
-          type="number"
+          type="text"
           name='weight'
           style={weightInputStyles}
           onChange={(event) => {
@@ -80,7 +80,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
         />
         <input
           className="repInput"
-          type="number"
+          type="text"
           name='reps'
           style={repsInputStyles}
           onChange={(event) => {
