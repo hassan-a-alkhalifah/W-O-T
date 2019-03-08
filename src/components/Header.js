@@ -9,7 +9,7 @@ import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage, noOfCheckedExercises, noOfExercises }) {
 
   const headerStyles = {
     width: '100%',
@@ -79,7 +79,13 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
       alt='Delete Icon'
       style={deleteIconStyles}
       onClick={() => {
-        dispatch(onDeleteChecked(checkboxCheckedLists));
+        const resettedExerciseID = v4();
+        const resettedSetID = v4();
+        if(noOfCheckedExercises === noOfExercises) {
+          dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+        } else {
+          dispatch(onDeleteChecked(checkboxCheckedLists, resettedSetID));
+        }
         dispatch(onEmptyCheckedLists());
       }}
     />;
@@ -120,7 +126,9 @@ Header.propTypes = {
   checkboxCheckedLists: PropTypes.object,
   ifAnyCheckboxIsChecked: PropTypes.bool,
   homepage: PropTypes.bool,
-  archivePage: PropTypes.bool
+  archivePage: PropTypes.bool,
+  noOfCheckedExercises: PropTypes.number,
+  noOfExercises: PropTypes.number
 }
 
 const mapStateToProps = (state) => {
@@ -134,7 +142,9 @@ const mapStateToProps = (state) => {
     checkboxCheckedLists: state.checkboxCheckedLists,
     ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
     homePage: state.pagesState.homePage,
-    archivePage: state.pagesState.archivePage
+    archivePage: state.pagesState.archivePage,
+    noOfCheckedExercises: state.checkboxCheckedLists.exerciseCheckedList.length,
+    noOfExercises: state.newWorkoutMasterExerciseList.masterExerciseList.length
   }
 }
 
