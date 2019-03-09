@@ -64,9 +64,37 @@ export default (state = initialState, action) => {
       })};
     }
     case c.DELETE_CHECKED: {
-      const newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
-        return !checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID);
+      let newMasterExerciseList = null;
+      const currentExerciseIDsList = state.masterExerciseList.map((exercise) => {
+        return exercise.exerciseID;
       });
+      const currentExerciseIDsCheckedList = currentExerciseIDsList.filter((exerciseID) => {
+        return checkboxCheckedLists.exerciseCheckedList.includes(exerciseID);
+      });
+      const noOfCurrentExerciseSetIDsChecked = currentExerciseIDsCheckedList.length;
+      const noOfCurrentExercise = state.masterExerciseList.length;
+      if(noOfCurrentExerciseSetIDsChecked === noOfCurrentExercise) {
+        newMasterExerciseList =
+        [
+          {
+            exerciseID: resettedExerciseID,
+            exerciseNumber: 1,
+            exerciseName: '',
+            setList: [
+              {
+                setID: resettedSetID,
+                setNumber: 1,
+                weight: '',
+                reps: ''
+              }
+            ]
+          }
+        ]
+      } else {
+        newMasterExerciseList = state.masterExerciseList.filter((exercise) => {
+          return !checkboxCheckedLists.exerciseCheckedList.includes(exercise.exerciseID);
+        });
+      }
       return {...state, masterExerciseList: newMasterExerciseList.map((exercise) => {
         const currentExerciseSetIDsList = exercise.setList.map((set) => {
           return set.setID;
