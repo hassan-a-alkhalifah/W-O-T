@@ -20,9 +20,10 @@ export const onAddCheckedCheckboxID = (ifChecked, whichInputTypeChecked, inputID
   inputID: inputID
 });
 
-export const onDeleteChecked = (checkboxCheckedLists, resettedSetID) => ({
+export const onDeleteChecked = (checkboxCheckedLists, resettedExerciseID, resettedSetID) => ({
   type: c.DELETE_CHECKED,
   checkboxCheckedLists: checkboxCheckedLists,
+  resettedExerciseID: resettedExerciseID,
   resettedSetID: resettedSetID
 });
 
