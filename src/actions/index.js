@@ -1,5 +1,31 @@
 import constants from './../constants';
-const { c } = constants;
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+
+const { c, firebaseConfig } = constants;
+
+firebase.initializeApp(firebaseConfig);
+const masterWorkoutList = firebase.database().ref('masterWorkoutList');
+
+export function onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList) {
+  return () => masterWorkoutList.push({
+    workoutTitleInput: workoutTitleInput,
+    workoutDateInput: workoutDateInput,
+    workoutNotesInput: workoutNotesInput,
+    masterExerciseList: masterExerciseList
+  });
+}
+
+export function watchFirebaseAddWorkout() {
+  return function(dispatch) {
+    masterWorkoutList.on('child_added', workout => {
+      const newWorkout = Object.assign({}, workout.val(), {
+        workoutID: workout.key
+      });
+      dispatch(onReceiveWorkout(newWorkout));
+    });
+  }
+}
 
 export const onAddExercise = (newExerciseID, newSetID) => ({
   type: c.ADD_EXERCISE,
@@ -57,4 +83,9 @@ export const onResetWorkoutForm = (resettedExerciseID, resettedSetID) => ({
 export const onChangePageState = (pageType) => ({
   type: c.CHANGE_PAGE_STATE,
   pageType: pageType
+});
+
+export const onReceiveWorkout = (newWorkout) => ({
+  type: c.RECEIVE_WORKOUT,
+  newWorkout: newWorkout
 });
