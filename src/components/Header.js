@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm, onChangePageState, onAddWorkout } from '../actions';
+import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm, onChangePageState, onChangePopUpModalState } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage }) {
 
   const headerStyles = {
     width: '100%',
@@ -73,10 +73,7 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
     alt='Finish Icon'
     style={finishIconStyles}
     onClick={() => {
-      const resettedExerciseID = v4();
-      const resettedSetID = v4();
-      dispatch(onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList));
-      dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+      dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
     }}
   />;
   }
@@ -132,11 +129,7 @@ Header.propTypes = {
   checkboxCheckedLists: PropTypes.object,
   ifAnyCheckboxIsChecked: PropTypes.bool,
   homepage: PropTypes.bool,
-  archivePage: PropTypes.bool,
-  workoutTitleInput: PropTypes.string,
-  workoutDateInput: PropTypes.string,
-  workoutNotesInput: PropTypes.string,
-  masterExerciseList: PropTypes.array
+  archivePage: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
@@ -150,11 +143,7 @@ const mapStateToProps = (state) => {
     checkboxCheckedLists: state.checkboxCheckedLists,
     ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
     homePage: state.pagesState.homePage,
-    archivePage: state.pagesState.archivePage,
-    workoutTitleInput: state.newWorkoutMasterExerciseList.workoutTitleInput,
-    workoutDateInput: state.newWorkoutMasterExerciseList.workoutDateInput,
-    workoutNotesInput: state.newWorkoutMasterExerciseList.workoutNotesInput,
-    masterExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList
+    archivePage: state.pagesState.archivePage
   }
 }
 

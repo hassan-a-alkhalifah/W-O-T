@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { onAddExercise, onExerciseNotesDisplay, onInputChange } from '../actions';
+import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import onAddExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -63,9 +63,39 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
     height: '40px',
     cursor: 'pointer'
   }
-  let workoutNotesInput = null;
+
+  const popUpModalStyles = {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: '100',
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(219, 219, 219, 0.5)'
+  };
+  const popUpModalSubWrapperStyles = {
+    width: '265px',
+    height: '130px',
+    backgroundColor: '#FFF'
+  };
+  const popUpModalTextWrapperStyles = {
+    paddingTop: '15px',
+    marginBottom: '15px',
+    textAlign: 'center'
+  };
+  const popUpModalButtonsContainerStyles = {
+    display: 'flex',
+    justifyContent: 'space-around'
+  };
+  const finishAndDisagreeIconStyles = {
+    width: '25px',
+    height: '25px',
+    cursor: 'pointer'
+  };
+
+  let workoutNotesInputField = null;
   if(workoutNotesState) {
-    workoutNotesInput =
+    workoutNotesInputField =
     <textarea
       rows='4'
       cols='27'
@@ -79,8 +109,76 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
     ></textarea>;
   }
 
+  let withoutSavingPopUpModal = null;
+  if(withoutSavingPopUpModalShown) {
+    withoutSavingPopUpModal =
+    <div style={popUpModalStyles}>
+        <div style={popUpModalSubWrapperStyles}>
+          <div style={popUpModalTextWrapperStyles}>
+            <p>Changes will not be saved</p>
+            <p>Are you sure you would like to exit?</p>
+          </div>
+          <div style={popUpModalButtonsContainerStyles}>
+            <img
+              src={finishIcon}
+              alt="Agree Icon"
+              style={finishAndDisagreeIconStyles}
+              onClick={() => {
+
+              }}
+            />
+            <img
+              src={disagreeIcon}
+              alt="Disagree Icon"
+              style={finishAndDisagreeIconStyles}
+              onClick={() => {
+
+              }}
+            />
+          </div>
+        </div>
+      </div>;
+  }
+
+  let finishedWorkoutPopUpModal = null;
+  if(finishedWorkoutPopUpModalShown) {
+    finishedWorkoutPopUpModal =
+    <div style={popUpModalStyles}>
+        <div style={popUpModalSubWrapperStyles}>
+          <div style={popUpModalTextWrapperStyles}>
+            <p>Are you finished with the workout?</p>
+          </div>
+          <div style={popUpModalButtonsContainerStyles}>
+            <img
+              src={finishIcon}
+              alt="Agree Icon"
+              style={finishAndDisagreeIconStyles}
+              onClick={() => {
+                const resettedExerciseID = v4();
+                const resettedSetID = v4();
+                dispatch(onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList));
+                dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+                dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
+              }}
+            />
+            <img
+              src={disagreeIcon}
+              alt="Disagree Icon"
+              style={finishAndDisagreeIconStyles}
+              onClick={() => {
+                dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
+              }}
+            />
+          </div>
+        </div>
+      </div>;
+  }
+
+
   return(
     <div style={workoutStyles}>
+      {withoutSavingPopUpModal}
+      {finishedWorkoutPopUpModal}
       <div style={workoutFormStyles}>
         <div style={workoutFormTopWrapperStyles}>
           <div style={workoutFormTopWrapperSpacerStyles}></div>
@@ -92,6 +190,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
             onChange={(event) => {
               dispatch(onInputChange('workout', event.target.name, event.target.value));
             }}
+            value={workoutTitleInput}
           />
           <img
             src={noteIcon}
@@ -110,8 +209,9 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
           onChange={(event) => {
             dispatch(onInputChange('workout', event.target.name, event.target.value));
           }}
+          value={workoutDateInput}
         />
-      {workoutNotesInput}
+      {workoutNotesInputField}
       </div>
       <ExerciseList />
       <div style={addExerciseIconWrapperStyles}>
@@ -134,14 +234,29 @@ Workout.propTypes = {
   dispatch: PropTypes.func,
   currentWorkoutNoOfExercise: PropTypes.number,
   workoutNotesState: PropTypes.bool,
-  workoutNotes: PropTypes.string
+  workoutNotes: PropTypes.string,
+  withoutSavingPopUpModalShown: PropTypes.bool,
+  finishedWorkoutPopUpModalShown: PropTypes.bool,
+  homepage: PropTypes.bool,
+  archivePage: PropTypes.bool,
+  workoutTitleInput: PropTypes.string,
+  workoutDateInput: PropTypes.string,
+  workoutNotesInput: PropTypes.string,
+  masterExerciseList: PropTypes.array
 }
 
 const mapStateToProps = (state) => {
   return {
     workoutNotesState: state.workoutNotesState.exerciseNotesShown,
-    workoutNotes: state.newWorkoutMasterExerciseList.workoutNotesInput
-
+    workoutNotes: state.newWorkoutMasterExerciseList.workoutNotesInput,
+    withoutSavingPopUpModalShown: state.popUpModalStateList.withoutSavingPopUpModalShown,
+    finishedWorkoutPopUpModalShown: state.popUpModalStateList.finishedWorkoutPopUpModalShown,
+    homePage: state.pagesState.homePage,
+    archivePage: state.pagesState.archivePage,
+    workoutTitleInput: state.newWorkoutMasterExerciseList.workoutTitleInput,
+    workoutDateInput: state.newWorkoutMasterExerciseList.workoutDateInput,
+    workoutNotesInput: state.newWorkoutMasterExerciseList.workoutNotesInput,
+    masterExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList
   }
 }
 

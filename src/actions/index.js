@@ -89,3 +89,8 @@ export const onReceiveWorkout = (newWorkout) => ({
   type: c.RECEIVE_WORKOUT,
   newWorkout: newWorkout
 });
+
+export const onChangePopUpModalState = (popUpModalKey) => ({
+  type: c.CHANGE_POP_UP_MODAL_STATE,
+  popUpModalKey: popUpModalKey
+});
