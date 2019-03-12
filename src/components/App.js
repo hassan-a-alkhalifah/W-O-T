@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { watchFirebaseAddWorkout } from '../actions';
@@ -11,10 +10,6 @@ import ExerciseArchive from './ExerciseArchive';
 import Footer from './Footer';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     const { dispatch } = this.props;
