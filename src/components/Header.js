@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
-import { onDeleteChecked, onEmptyCheckedLists, onResetWorkoutForm, onChangePageState, onChangePopUpModalState } from '../actions';
+import { Link } from 'react-router-dom';
+import { onDeleteChecked, onEmptyCheckedLists, onChangePageState, onChangePopUpModalState, onChangePageType } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
@@ -54,19 +54,15 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
   let finishIconTag = null;
   if(!archivePage) {
     archiveIconTag =
-    <Link to='/exerciseArchive'>
-      <img
-        src={archiveIcon}
-        alt='Archive Icon'
-        style={exerciseArchiveIconStyles}
-        onClick={() => {
-          const resettedExerciseID = v4();
-          const resettedSetID = v4();
-          dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
-          dispatch(onChangePageState('archive'));
-        }}
-      />
-  </Link>;
+    <img
+      src={archiveIcon}
+      alt='Archive Icon'
+      style={exerciseArchiveIconStyles}
+      onClick={() => {
+        dispatch(onChangePageType('/exerciseArchive'));
+        dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+      }}
+    />;
   finishIconTag =
   <img
     src={finishIcon}
@@ -105,13 +101,14 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
             src={homeIcon}
             alt='Home Icon'
             style={homeIconStyles}
-            onClick={() => {
+            onClick={(event) => {
               if(homePage) {
-                const resettedExerciseID = v4();
-                const resettedSetID = v4();
-                dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+                event.preventDefault();
+                dispatch(onChangePageType('/'));
+                dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
               } else {
-                dispatch(onChangePageState('home'));
+                dispatch(onChangePageType('/'));
+                dispatch(onChangePageState());
               }
             }}
           />
