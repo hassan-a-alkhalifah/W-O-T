@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { onAddSet, onAddCheckedCheckboxID, onInputChange, onIconStateChange } from '../actions';
+import { onAddSet, onAddCheckedCheckboxID, onInputChange } from '../actions';
 import onAddSetIcon from '../assets/images/add-set-icon.png';
 import SetList from './SetList';
 
