@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
-import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState } from '../actions';
+import { Link } from 'react-router-dom';
+import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState, onChangePageType } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import onAddExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList, pageLink }) {
 
   const workoutStyles = {
     paddingTop: '115px'
@@ -119,20 +120,27 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
             <p>Are you sure you would like to exit?</p>
           </div>
           <div style={popUpModalButtonsContainerStyles}>
-            <img
-              src={finishIcon}
-              alt="Agree Icon"
-              style={finishAndDisagreeIconStyles}
-              onClick={() => {
-
-              }}
-            />
+            <Link to={pageLink}>
+              <img
+                src={finishIcon}
+                alt="Agree Icon"
+                style={finishAndDisagreeIconStyles}
+                onClick={() => {
+                  const resettedExerciseID = v4();
+                  const resettedSetID = v4();
+                  dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
+                  dispatch(onChangePageState());
+                  dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+                }}
+              />
+            </Link>
             <img
               src={disagreeIcon}
               alt="Disagree Icon"
               style={finishAndDisagreeIconStyles}
               onClick={() => {
-
+                dispatch(onChangePageType('/'));
+                dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
               }}
             />
           </div>
@@ -242,7 +250,8 @@ Workout.propTypes = {
   workoutTitleInput: PropTypes.string,
   workoutDateInput: PropTypes.string,
   workoutNotesInput: PropTypes.string,
-  masterExerciseList: PropTypes.array
+  masterExerciseList: PropTypes.array,
+  pageLink: PropTypes.string
 }
 
 const mapStateToProps = (state) => {
@@ -256,7 +265,8 @@ const mapStateToProps = (state) => {
     workoutTitleInput: state.newWorkoutMasterExerciseList.workoutTitleInput,
     workoutDateInput: state.newWorkoutMasterExerciseList.workoutDateInput,
     workoutNotesInput: state.newWorkoutMasterExerciseList.workoutNotesInput,
-    masterExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList
+    masterExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList,
+    pageLink: state.pagesState.pageType
   }
 }
 
