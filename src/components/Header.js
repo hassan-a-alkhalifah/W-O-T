@@ -9,7 +9,7 @@ import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage, newWorkoutMasterExerciseList }) {
 
   const headerStyles = {
     width: '100%',
@@ -50,26 +50,67 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
     cursor: 'pointer'
   }
 
+  function checkIfAnyInputsAreNotBlank() {
+    let anyInputsNotBlank = false;
+    Object.keys(newWorkoutMasterExerciseList).map((currentWorkoutContent) => {
+      if(currentWorkoutContent !== 'masterExerciseList') {
+        if(newWorkoutMasterExerciseList[currentWorkoutContent] !== '') {
+          anyInputsNotBlank = true;
+        }
+      } else {
+        if(newWorkoutMasterExerciseList[currentWorkoutContent].length > 1) {
+          anyInputsNotBlank = true;
+        } else {
+          Object.keys(newWorkoutMasterExerciseList[currentWorkoutContent][0]).map((currentExerciseContent) => {
+            if(currentExerciseContent === 'exerciseName' && newWorkoutMasterExerciseList[currentWorkoutContent][0][currentExerciseContent] !== '') {
+              anyInputsNotBlank = true;
+            }
+            if(currentExerciseContent === 'setList') {
+              if(newWorkoutMasterExerciseList[currentWorkoutContent][0][currentExerciseContent].length > 1) {
+                anyInputsNotBlank = true;
+              } else if(newWorkoutMasterExerciseList[currentWorkoutContent][0][currentExerciseContent][0].weight !== '' || newWorkoutMasterExerciseList[currentWorkoutContent][0][currentExerciseContent][0].reps !== '') {
+                anyInputsNotBlank = true;
+              }
+            }
+          });
+        }
+      }
+    });
+    return anyInputsNotBlank;
+  }
+
   let archiveIconTag = null;
   let finishIconTag = null;
   if(!archivePage) {
     archiveIconTag =
-    <img
-      src={archiveIcon}
-      alt='Archive Icon'
-      style={exerciseArchiveIconStyles}
-      onClick={() => {
-        dispatch(onChangePageType('/exerciseArchive'));
-        dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
-      }}
-    />;
+    <Link to='/exerciseArchive'>
+      <img
+        src={archiveIcon}
+        alt='Archive Icon'
+        style={exerciseArchiveIconStyles}
+        onClick={(event) => {
+          const anyInputsNotBlank = checkIfAnyInputsAreNotBlank();
+          if(anyInputsNotBlank) {
+            event.preventDefault();
+            dispatch(onChangePageType('/exerciseArchive'));
+            dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+          } else {
+            dispatch(onChangePageType('/exerciseArchive'));
+            dispatch(onChangePageState());
+          }
+        }}
+      />
+    </Link>;
   finishIconTag =
   <img
     src={finishIcon}
     alt='Finish Icon'
     style={finishIconStyles}
     onClick={() => {
-      dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
+      const anyInputsNotBlank = checkIfAnyInputsAreNotBlank();
+      if(anyInputsNotBlank) {
+        dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
+      }
     }}
   />;
   }
@@ -103,9 +144,11 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
             style={homeIconStyles}
             onClick={(event) => {
               if(homePage) {
+                const anyInputsNotBlank = checkIfAnyInputsAreNotBlank();
                 event.preventDefault();
-                dispatch(onChangePageType('/'));
-                dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+                if(anyInputsNotBlank) {
+                  dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+                }
               } else {
                 dispatch(onChangePageType('/'));
                 dispatch(onChangePageState());
@@ -126,7 +169,8 @@ Header.propTypes = {
   checkboxCheckedLists: PropTypes.object,
   ifAnyCheckboxIsChecked: PropTypes.bool,
   homepage: PropTypes.bool,
-  archivePage: PropTypes.bool
+  archivePage: PropTypes.bool,
+  newWorkoutMasterExerciseList: PropTypes.object
 }
 
 const mapStateToProps = (state) => {
@@ -140,7 +184,8 @@ const mapStateToProps = (state) => {
     checkboxCheckedLists: state.checkboxCheckedLists,
     ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
     homePage: state.pagesState.homePage,
-    archivePage: state.pagesState.archivePage
+    archivePage: state.pagesState.archivePage,
+    newWorkoutMasterExerciseList: state.newWorkoutMasterExerciseList
   }
 }
 
