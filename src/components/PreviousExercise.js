@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { onAddCheckedCheckboxID, onInputChange } from '../actions';
 
-function PreviousExercise({ workoutTitle, workoutDate }) {
+function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch }) {
 
   const previousExerciseStyles = {
     display: 'flex',
@@ -34,7 +36,12 @@ function PreviousExercise({ workoutTitle, workoutDate }) {
         </div>
       </Link>
       <label className='checkbox' style={workoutCheckboxStyles}>
-        <input type="checkbox"/>
+        <input
+          type="checkbox"
+          onChange={(event) => {
+            dispatch(onAddCheckedCheckboxID(event.target.checked, 'workoutCheckedList', workoutID));
+          }}
+        />
         <span></span>
       </label>
     </div>
@@ -44,7 +51,9 @@ function PreviousExercise({ workoutTitle, workoutDate }) {
 
 PreviousExercise.propTypes = {
   workoutTitle: PropTypes.string,
-  workoutDate: PropTypes.string
+  workoutDate: PropTypes.string,
+  workoutID: PropTypes.string,
+  dispatch: PropTypes.func
 }
 
-export default PreviousExercise;
+export default connect()(PreviousExercise);

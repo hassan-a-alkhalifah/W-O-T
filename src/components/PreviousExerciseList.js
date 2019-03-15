@@ -13,6 +13,7 @@ function PreviousExerciseList({ masterWorkoutList }) {
               key={workout.workoutID}
               workoutTitle={workout.workoutTitleInput}
               workoutDate={workout.workoutDateInput}
+              workoutID={workout.workoutID}
             />
           );
         })
