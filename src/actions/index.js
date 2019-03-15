@@ -14,6 +14,15 @@ export function onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesIn
     workoutNotesInput: workoutNotesInput,
     masterExerciseList: masterExerciseList
   });
+};
+
+export function onDeleteWorkout(workoutCheckedList) {
+  return () => {
+    workoutCheckedList.map((checkedWorkoutID) => {
+      masterWorkoutList.child(checkedWorkoutID).remove();
+    });
+    return masterWorkoutList;
+  }
 }
 
 export function watchFirebaseAddWorkout() {
@@ -25,7 +34,16 @@ export function watchFirebaseAddWorkout() {
       dispatch(onReceiveWorkout(newWorkout));
     });
   }
-}
+};
+
+export function watchFirebaseDeleteWorkout() {
+  console.log('watchFirebaseDeleteWorkout');
+  return function(dispatch) {
+    masterWorkoutList.on('child_removed', workout => {
+      dispatch(onRemoveWorkout(workout.key));
+    });
+  }
+};
 
 export const onAddExercise = (newExerciseID, newSetID) => ({
   type: c.ADD_EXERCISE,
@@ -92,6 +110,12 @@ export const onChangePageType = (pageType) => ({
 export const onReceiveWorkout = (newWorkout) => ({
   type: c.RECEIVE_WORKOUT,
   newWorkout: newWorkout
+});
+
+export const onRemoveWorkout = (workoutToBeRemovedID) => ({
+  type: c.REMOVE_WORKOUT,
+  workoutToBeRemovedID: workoutToBeRemovedID
+
 });
 
 export const onChangePopUpModalState = (popUpModalKey) => ({

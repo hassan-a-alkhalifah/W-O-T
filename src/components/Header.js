@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import { Link } from 'react-router-dom';
-import { onDeleteChecked, onEmptyCheckedLists, onChangePageState, onChangePopUpModalState, onChangePageType } from '../actions';
+import { onDeleteChecked, onEmptyCheckedLists, onChangePageState, onChangePopUpModalState, onChangePageType, onDeleteWorkout } from '../actions';
 import homeIcon from '../assets/images/home-icon.png';
 import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
@@ -124,9 +124,13 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
       alt='Delete Icon'
       style={deleteIconStyles}
       onClick={() => {
-        const resettedExerciseID = v4();
-        const resettedSetID = v4();
-        dispatch(onDeleteChecked(checkboxCheckedLists, resettedExerciseID, resettedSetID));
+        if(archivePage) {
+          dispatch(onDeleteWorkout(checkboxCheckedLists.workoutCheckedList));
+        } else {
+          const resettedExerciseID = v4();
+          const resettedSetID = v4();
+          dispatch(onDeleteChecked(checkboxCheckedLists, resettedExerciseID, resettedSetID));
+        }
         dispatch(onEmptyCheckedLists());
       }}
     />;

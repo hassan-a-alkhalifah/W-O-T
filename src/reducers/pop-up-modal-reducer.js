@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
 
   switch(action.type) {
     case c.CHANGE_POP_UP_MODAL_STATE: {
-      console.log(popUpModalKey);
       return {...state, [popUpModalKey]: state[popUpModalKey] ? false : true};
     }
     default: {
