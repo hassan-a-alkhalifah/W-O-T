@@ -13,7 +13,8 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
 
   const headerStyles = {
     width: '100%',
-    position: 'fixed'
+    position: 'fixed',
+    zIndex: '200'
   }
   const headerTitleWrapperStyles = {
     height: '68px',
@@ -52,7 +53,7 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
 
   function checkIfAnyInputsAreNotBlank() {
     let anyInputsNotBlank = false;
-    Object.keys(newWorkoutMasterExerciseList).map((currentWorkoutContent) => {
+    Object.keys(newWorkoutMasterExerciseList).forEach((currentWorkoutContent) => {
       if(currentWorkoutContent !== 'masterExerciseList') {
         if(newWorkoutMasterExerciseList[currentWorkoutContent] !== '') {
           anyInputsNotBlank = true;
@@ -61,7 +62,7 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
         if(newWorkoutMasterExerciseList[currentWorkoutContent].length > 1) {
           anyInputsNotBlank = true;
         } else {
-          Object.keys(newWorkoutMasterExerciseList[currentWorkoutContent][0]).map((currentExerciseContent) => {
+          Object.keys(newWorkoutMasterExerciseList[currentWorkoutContent][0]).forEach((currentExerciseContent) => {
             if(currentExerciseContent === 'exerciseName' && newWorkoutMasterExerciseList[currentWorkoutContent][0][currentExerciseContent] !== '') {
               anyInputsNotBlank = true;
             }
@@ -175,7 +176,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => {
   let ifAnyCheckboxIsChecked = false;
-  Object.values(state.checkboxCheckedLists).map((checkboxList) => {
+  Object.values(state.checkboxCheckedLists).forEach((checkboxList) => {
     if(checkboxList.length > 0) {
       ifAnyCheckboxIsChecked = true;
     }

@@ -13,6 +13,7 @@ import ExerciseList from './ExerciseList';
 function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList, pageLink }) {
 
   const workoutStyles = {
+    position: 'relative',
     paddingTop: '115px'
   }
   const workoutFormStyles = {
@@ -125,7 +126,10 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
                 src={finishIcon}
                 alt="Agree Icon"
                 style={finishAndDisagreeIconStyles}
-                onClick={() => {
+                onClick={(event) => {
+                  if(pageLink === '/') {
+                    event.preventDefault();
+                  }
                   const resettedExerciseID = v4();
                   const resettedSetID = v4();
                   dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));

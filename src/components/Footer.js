@@ -14,7 +14,8 @@ function Footer() {
     bottom: '0',
     backgroundColor: '#000',
     fontSize: '12px',
-    color: '#FFF'
+    color: '#FFF',
+    zIndex: '200'
   }
 
   const footerIconStyles = {

@@ -12,6 +12,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 .checkbox {
+  display: flex;
   cursor: pointer;
 }
 .checkbox input[type='checkbox'] {
