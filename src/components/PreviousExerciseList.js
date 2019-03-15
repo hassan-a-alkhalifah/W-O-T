@@ -1,13 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import PreviousExercise from './PreviousExercise';
 
-function PreviousExerciseList(props) {
+function PreviousExerciseList({ masterWorkoutList }) {
   return(
     <div>
-      <PreviousExercise />
+      {
+        masterWorkoutList.map((workout) => {
+          return (
+            <PreviousExercise
+              key={workout.workoutID}
+              workoutTitle={workout.workoutTitleInput}
+              workoutDate={workout.workoutDateInput}
+            />
+          );
+        })
+      }
     </div>
   );
 }
 
-export default PreviousExerciseList;
+PreviousExerciseList.propTypes = {
+  masterWorkoutList: PropTypes.array
+};
+
+const mapStateToProps = (state) => {
+  return {
+    masterWorkoutList: state.masterWorkoutList
+  };
+};
+
+export default connect(mapStateToProps)(PreviousExerciseList);
