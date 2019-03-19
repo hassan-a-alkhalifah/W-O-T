@@ -6,6 +6,7 @@ const { c } = constants;
 const initialExerciseID = v4();
 const initialSetID = v4();
 const initialState = {
+  workoutID: '',
   workoutTitleInput: '',
   workoutDateInput: '',
   workoutNotesInput: '',
@@ -72,6 +73,7 @@ describe('newWorkoutExerciseListReducer', () => {
           }
         ],
         "workoutDateInput": "",
+        "workoutID": "",
         "workoutNotesInput": "",
         "workoutTitleInput": ""
       }
@@ -110,6 +112,7 @@ describe('newWorkoutExerciseListReducer', () => {
           },
         ],
         "workoutDateInput": "",
+        "workoutID": "",
         "workoutNotesInput": "",
         "workoutTitleInput": ""
       }
@@ -118,6 +121,7 @@ describe('newWorkoutExerciseListReducer', () => {
 
   test('Should successfully delete exercises and or also sets which are checked', () => {
     const startingState = {
+      workoutID: '',
       workoutTitleInput: '',
       workoutDateInput: '',
       workoutNotesInput: '',
@@ -169,6 +173,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(startingState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -193,6 +198,7 @@ describe('newWorkoutExerciseListReducer', () => {
 
   test('If all sets of current exercise are checked, should successfully delete all sets of current exercise and add one new starting set', () => {
     const startingState = {
+      workoutID: '',
       workoutTitleInput: '',
       workoutDateInput: '',
       workoutNotesInput: '',
@@ -231,6 +237,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(startingState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -264,6 +271,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: 'Title',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -297,6 +305,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -330,6 +339,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -360,6 +370,7 @@ describe('newWorkoutExerciseListReducer', () => {
     }
     expect(newWorkoutExerciseListReducer(initialState, action)).toEqual(
       {
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',

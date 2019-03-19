@@ -14,6 +14,8 @@ function PreviousExerciseList({ masterWorkoutList }) {
               workoutTitle={workout.workoutTitleInput}
               workoutDate={workout.workoutDateInput}
               workoutID={workout.workoutID}
+              workoutNotes={workout.workoutNotesInput}
+              workoutMasterExerciseList={workout.masterExerciseList}
             />
           );
         })

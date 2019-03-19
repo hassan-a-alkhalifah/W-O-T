@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { v4 } from 'uuid';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState, onChangePageType } from '../actions';
+import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState, onChangePageType, onAddEditedWorkout } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import onAddExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import disagreeIcon from '../assets/images/disagree-icon.png';
 import ExerciseList from './ExerciseList';
 
-function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList, pageLink }) {
+function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, workoutNotes, withoutSavingPopUpModalShown, finishedWorkoutPopUpModalShown, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList, pageLink, ifEdit, selectedWorkoutToBeEditedID }) {
 
   const workoutStyles = {
     position: 'relative',
@@ -135,6 +135,7 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
                   dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
                   dispatch(onChangePageState());
                   dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
+                  dispatch(onChangePageType('/', false));
                 }}
               />
             </Link>
@@ -143,7 +144,11 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
               alt="Disagree Icon"
               style={finishAndDisagreeIconStyles}
               onClick={() => {
-                dispatch(onChangePageType('/'));
+                if(ifEdit) {
+                  dispatch(onChangePageType('/', true));
+                } else {
+                  dispatch(onChangePageType('/', false));
+                }
                 dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
               }}
             />
@@ -168,7 +173,12 @@ function Workout({ dispatch, currentWorkoutNoOfExercise, workoutNotesState, work
               onClick={() => {
                 const resettedExerciseID = v4();
                 const resettedSetID = v4();
-                dispatch(onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList));
+                if(ifEdit) {
+                  dispatch(onAddEditedWorkout(selectedWorkoutToBeEditedID, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList));
+                  dispatch(onChangePageType('/', false));
+                } else {
+                  dispatch(onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList));
+                }
                 dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
                 dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
               }}
@@ -255,7 +265,9 @@ Workout.propTypes = {
   workoutDateInput: PropTypes.string,
   workoutNotesInput: PropTypes.string,
   masterExerciseList: PropTypes.array,
-  pageLink: PropTypes.string
+  pageLink: PropTypes.string,
+  ifEdit: PropTypes.bool,
+  selectedWorkoutToBeEditedID: PropTypes.string
 }
 
 const mapStateToProps = (state) => {
@@ -270,7 +282,9 @@ const mapStateToProps = (state) => {
     workoutDateInput: state.newWorkoutMasterExerciseList.workoutDateInput,
     workoutNotesInput: state.newWorkoutMasterExerciseList.workoutNotesInput,
     masterExerciseList: state.newWorkoutMasterExerciseList.masterExerciseList,
-    pageLink: state.pagesState.pageType
+    pageLink: state.pagesState.pageType,
+    ifEdit: state.pagesState.ifEdit,
+    selectedWorkoutToBeEditedID: state.newWorkoutMasterExerciseList.workoutID
   }
 }
 

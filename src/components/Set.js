@@ -77,6 +77,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
           onChange={(event) => {
             dispatch(onInputChange('set', event.target.name, event.target.value, setID, exerciseID));
           }}
+          value={weight}
         />
         <input
           className="repInput"
@@ -86,6 +87,7 @@ function Set({ setID, setPos, weight, reps, exerciseID, noOfSets, dispatch }) {
           onChange={(event) => {
             dispatch(onInputChange('set', event.target.name, event.target.value, setID, exerciseID));
           }}
+          value={reps}
         />
       </div>
       {ifNotFirstSetCheckbox}

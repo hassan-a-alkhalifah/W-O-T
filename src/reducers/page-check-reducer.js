@@ -4,12 +4,13 @@ const { c } = constants;
 const initialState = {
   homePage: true,
   archivePage: false,
-  pageType: '/'
+  pageType: '/',
+  ifEdit: false
 };
 
 export default (state = initialState, action) => {
 
-  const { pageType } = action;
+  const { pageType, ifEdit } = action;
 
   switch(action.type) {
     case c.CHANGE_PAGE_STATE: {
@@ -20,7 +21,7 @@ export default (state = initialState, action) => {
       }
     }
     case c.CHANGE_PAGE_TYPE: {
-      return {...state, pageType: pageType};
+      return {...state, pageType: pageType, ifEdit: ifEdit};
     }
     default: {
       return state;

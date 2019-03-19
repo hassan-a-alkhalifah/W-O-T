@@ -9,7 +9,7 @@ import archiveIcon from '../assets/images/archive-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
 import deleteIcon from '../assets/images/delete-icon.png';
 
-function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage, newWorkoutMasterExerciseList }) {
+function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePage, archivePage, newWorkoutMasterExerciseList, ifEdit }) {
 
   const headerStyles = {
     width: '100%',
@@ -93,10 +93,14 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
           const anyInputsNotBlank = checkIfAnyInputsAreNotBlank();
           if(anyInputsNotBlank) {
             event.preventDefault();
-            dispatch(onChangePageType('/exerciseArchive'));
+            if(ifEdit) {
+              dispatch(onChangePageType('/exerciseArchive', true));
+            } else {
+              dispatch(onChangePageType('/exerciseArchive', false));
+            }
             dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
           } else {
-            dispatch(onChangePageType('/exerciseArchive'));
+            dispatch(onChangePageType('/exerciseArchive', false));
             dispatch(onChangePageState());
           }
         }}
@@ -155,7 +159,7 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
                   dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
                 }
               } else {
-                dispatch(onChangePageType('/'));
+                dispatch(onChangePageType('/', false));
                 dispatch(onChangePageState());
               }
             }}
@@ -175,7 +179,8 @@ Header.propTypes = {
   ifAnyCheckboxIsChecked: PropTypes.bool,
   homepage: PropTypes.bool,
   archivePage: PropTypes.bool,
-  newWorkoutMasterExerciseList: PropTypes.object
+  newWorkoutMasterExerciseList: PropTypes.object,
+  ifEdit: PropTypes.bool
 }
 
 const mapStateToProps = (state) => {
@@ -190,7 +195,8 @@ const mapStateToProps = (state) => {
     ifAnyCheckboxIsChecked: ifAnyCheckboxIsChecked,
     homePage: state.pagesState.homePage,
     archivePage: state.pagesState.archivePage,
-    newWorkoutMasterExerciseList: state.newWorkoutMasterExerciseList
+    newWorkoutMasterExerciseList: state.newWorkoutMasterExerciseList,
+    ifEdit: state.pagesState.ifEdit
   }
 }
 
