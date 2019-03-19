@@ -22,8 +22,19 @@ export function onDeleteWorkout(workoutCheckedList) {
       masterWorkoutList.child(checkedWorkoutID).remove();
     });
     return masterWorkoutList;
-  }
-}
+  };
+};
+
+export function onAddEditedWorkout(selectedWorkoutToBeEditedID, workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList) {
+  return () => {
+    return masterWorkoutList.child(selectedWorkoutToBeEditedID).update({
+      workoutTitleInput: workoutTitleInput,
+      workoutDateInput: workoutDateInput,
+      workoutNotesInput: workoutNotesInput,
+      masterExerciseList: masterExerciseList
+    });
+  };
+};
 
 export function watchFirebaseAddWorkout() {
   return function(dispatch) {
@@ -33,16 +44,26 @@ export function watchFirebaseAddWorkout() {
       });
       dispatch(onReceiveWorkout(newWorkout));
     });
-  }
+  };
 };
 
 export function watchFirebaseDeleteWorkout() {
-  console.log('watchFirebaseDeleteWorkout');
   return function(dispatch) {
     masterWorkoutList.on('child_removed', workout => {
       dispatch(onRemoveWorkout(workout.key));
     });
-  }
+  };
+};
+
+export function watchFirebaseEditWorkout() {
+  return function(dispatch) {
+    masterWorkoutList.on('child_changed', workout => {
+      const editedWorkout = Object.assign({}, workout.val(), {
+        workoutID: workout.key
+      });
+      dispatch(onEditWorkout(editedWorkout, editedWorkout.workoutID));
+    });
+  };
 };
 
 export const onAddExercise = (newExerciseID, newSetID) => ({
@@ -102,9 +123,10 @@ export const onChangePageState = () => ({
   type: c.CHANGE_PAGE_STATE
 });
 
-export const onChangePageType = (pageType) => ({
+export const onChangePageType = (pageType, ifEdit) => ({
   type: c.CHANGE_PAGE_TYPE,
-  pageType: pageType
+  pageType: pageType,
+  ifEdit: ifEdit
 });
 
 export const onReceiveWorkout = (newWorkout) => ({
@@ -121,4 +143,19 @@ export const onRemoveWorkout = (workoutToBeRemovedID) => ({
 export const onChangePopUpModalState = (popUpModalKey) => ({
   type: c.CHANGE_POP_UP_MODAL_STATE,
   popUpModalKey: popUpModalKey
+});
+
+export const onAutoFillingEditForm = (workoutID, workoutTitle, workoutDate, workoutNotes, workoutMasterExerciseList) => ({
+  type: c.AUTO_FILL_EDIT_FORM,
+  workoutID: workoutID,
+  workoutTitle: workoutTitle,
+  workoutDate: workoutDate,
+  workoutNotes: workoutNotes,
+  workoutMasterExerciseList: workoutMasterExerciseList
+});
+
+export const onEditWorkout = (editedWorkout, editedWorkoutID) => ({
+  type: c.EDIT_WORKOUT,
+  editedWorkout: editedWorkout,
+  editedWorkoutID: editedWorkoutID
 });

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { onAddCheckedCheckboxID, onInputChange } from '../actions';
+import { onAddCheckedCheckboxID, onChangePageType, onChangePageState, onAutoFillingEditForm } from '../actions';
 
-function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch }) {
+function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch, workoutNotes, workoutMasterExerciseList }) {
 
   const previousExerciseStyles = {
     display: 'flex',
@@ -30,7 +30,14 @@ function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch }) {
     <div style={previousExerciseStyles}>
       <div style={workoutSpacerStyles}></div>
       <Link to="/">
-        <div style={dateWorkoutTitleContainerStyles}>
+        <div
+          style={dateWorkoutTitleContainerStyles}
+          onClick={() => {
+            dispatch(onChangePageType('/', true));
+            dispatch(onChangePageState());
+            dispatch(onAutoFillingEditForm(workoutID, workoutTitle, workoutDate, workoutNotes, workoutMasterExerciseList));
+          }}
+        >
           <p style={dateStyles}>{workoutDate}</p>
           <p>{workoutTitle}</p>
         </div>
@@ -53,6 +60,8 @@ PreviousExercise.propTypes = {
   workoutTitle: PropTypes.string,
   workoutDate: PropTypes.string,
   workoutID: PropTypes.string,
+  workoutNotes: PropTypes.string,
+  workoutMasterExerciseList: PropTypes.array,
   dispatch: PropTypes.func
 }
 

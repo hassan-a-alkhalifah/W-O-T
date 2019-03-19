@@ -105,6 +105,7 @@ function Exercise({ exerciseID, exerciseName, setList, dispatch, noOfExercises }
           onChange={(event) => {
             dispatch(onInputChange('exercise', event.target.name, event.target.value, exerciseID));
           }}
+          value={exerciseName}
         />
       {ifNotFirstExerciseCheckbox}
       </div>

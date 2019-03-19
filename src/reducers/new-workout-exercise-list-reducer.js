@@ -5,6 +5,7 @@ const { c } = constants;
 const initialExerciseID = v4();
 const initialSetID = v4();
 const initialState = {
+  workoutID: '',
   workoutTitleInput: '',
   workoutDateInput: '',
   workoutNotesInput: '',
@@ -27,7 +28,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 
-  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue, inputTargetID, setExerciseID, resettedExerciseID, resettedSetID } = action;
+  const { newExerciseID, newSetID, addedSetExerciseID, addedSetID, checkboxCheckedLists, sectionName, inputName, inputValue, inputTargetID, setExerciseID, resettedExerciseID, resettedSetID, workoutID, workoutTitle, workoutDate, workoutNotes, workoutMasterExerciseList } = action;
 
   switch(action.type) {
     case c.ADD_EXERCISE: {
@@ -150,6 +151,7 @@ export default (state = initialState, action) => {
     case c.RESET_WORKOUT_FORM: {
       return {
         ...state,
+        workoutID: '',
         workoutTitleInput: '',
         workoutDateInput: '',
         workoutNotesInput: '',
@@ -168,6 +170,17 @@ export default (state = initialState, action) => {
             ]
           }
         ]
+      };
+    }
+    case c.AUTO_FILL_EDIT_FORM: {
+      console.log(workoutID);
+      return {
+        ...state,
+        workoutID: workoutID,
+        workoutTitleInput: workoutTitle,
+        workoutDateInput: workoutDate,
+        workoutNotesInput: workoutNotes,
+        masterExerciseList: workoutMasterExerciseList
       };
     }
     default:
