@@ -8,11 +8,17 @@ function PreviousExerciseList({ masterWorkoutList }) {
     <div>
       {
         masterWorkoutList.map((workout) => {
+          let date = new Date(workout.workoutDateInput);
+          let year = date.getFullYear();
+          let month = ('0' + (date.getMonth() + 1)).slice(-2);
+          let day = ('0' + date.getDate()).slice(-2);
+          const formattedDate = year +'-'+day+'-'+month;
           return (
             <PreviousExercise
               key={workout.workoutID}
               workoutTitle={workout.workoutTitleInput}
               workoutDate={workout.workoutDateInput}
+              workoutFormattedDate={formattedDate}
               workoutID={workout.workoutID}
               workoutNotes={workout.workoutNotesInput}
               workoutMasterExerciseList={workout.masterExerciseList}

@@ -8,6 +8,7 @@ firebase.initializeApp(firebaseConfig);
 const masterWorkoutList = firebase.database().ref('masterWorkoutList');
 
 export function onAddWorkout(workoutTitleInput, workoutDateInput, workoutNotesInput, masterExerciseList) {
+  console.log(workoutDateInput);
   return () => masterWorkoutList.push({
     workoutTitleInput: workoutTitleInput,
     workoutDateInput: workoutDateInput,
@@ -39,6 +40,7 @@ export function onAddEditedWorkout(selectedWorkoutToBeEditedID, workoutTitleInpu
 export function watchFirebaseAddWorkout() {
   return function(dispatch) {
     masterWorkoutList.on('child_added', workout => {
+      console.log(workout.val());
       const newWorkout = Object.assign({}, workout.val(), {
         workoutID: workout.key
       });

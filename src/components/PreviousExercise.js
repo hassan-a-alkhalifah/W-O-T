@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { onAddCheckedCheckboxID, onChangePageType, onChangePageState, onAutoFillingEditForm } from '../actions';
 
-function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch, workoutNotes, workoutMasterExerciseList }) {
+function PreviousExercise({ workoutTitle, workoutDate, workoutFormattedDate, workoutID, dispatch, workoutNotes, workoutMasterExerciseList }) {
 
   const previousExerciseStyles = {
     display: 'flex',
@@ -38,7 +38,7 @@ function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch, work
             dispatch(onAutoFillingEditForm(workoutID, workoutTitle, workoutDate, workoutNotes, workoutMasterExerciseList));
           }}
         >
-          <p style={dateStyles}>{workoutDate}</p>
+          <p style={dateStyles}>{workoutFormattedDate}</p>
           <p>{workoutTitle}</p>
         </div>
       </Link>
@@ -58,7 +58,8 @@ function PreviousExercise({ workoutTitle, workoutDate, workoutID, dispatch, work
 
 PreviousExercise.propTypes = {
   workoutTitle: PropTypes.string,
-  workoutDate: PropTypes.string,
+  workoutDate: PropTypes.number,
+  workoutFormattedDate: PropTypes.string,
   workoutID: PropTypes.string,
   workoutNotes: PropTypes.string,
   workoutMasterExerciseList: PropTypes.array,

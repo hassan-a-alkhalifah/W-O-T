@@ -4,10 +4,12 @@ import constants from './../constants';
 const { c } = constants;
 const initialExerciseID = v4();
 const initialSetID = v4();
+// const newDate = new Date();
+const newDate = new Date().getTime();
 const initialState = {
   workoutID: '',
   workoutTitleInput: '',
-  workoutDateInput: '',
+  workoutDateInput: newDate,
   workoutNotesInput: '',
   masterExerciseList: [
     {
@@ -153,7 +155,7 @@ export default (state = initialState, action) => {
         ...state,
         workoutID: '',
         workoutTitleInput: '',
-        workoutDateInput: '',
+        workoutDateInput: newDate,
         workoutNotesInput: '',
         masterExerciseList: [
           {

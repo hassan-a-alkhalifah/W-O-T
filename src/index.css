@@ -11,6 +11,31 @@ body {
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
+.react-datepicker__input-container input {
+  width: 185px;
+  height: 34px;
+  border: none;
+  padding-left: 13px;
+}
+.react-datepicker-popper {
+  left: -21px!important;
+}
+.react-datepicker {
+  border-radius: 0!important;
+}
+.react-datepicker__header {
+  background-color: rgb(219,219,219)!important;
+  border-radius: unset!important;
+}
+.react-datepicker__navigation--previous {
+    border-right-color: #000!important;
+}
+.react-datepicker__navigation--next {
+    border-left-color: #000!important;
+}
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
+    background-color: rgb(52,152,219)!important;
+}
 .checkbox {
   display: flex;
   cursor: pointer;
