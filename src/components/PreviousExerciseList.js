@@ -36,7 +36,9 @@ PreviousExerciseList.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    masterWorkoutList: state.masterWorkoutList
+    masterWorkoutList: state.masterWorkoutList.sort((a, b) => {
+      return a.workoutDateInput - b.workoutDateInput;
+    })
   };
 };
 

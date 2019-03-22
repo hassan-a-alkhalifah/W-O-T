@@ -161,3 +161,7 @@ export const onEditWorkout = (editedWorkout, editedWorkoutID) => ({
   editedWorkout: editedWorkout,
   editedWorkoutID: editedWorkoutID
 });
+
+export const onArchivePageLoad = () => ({
+  type: c.LOAD_ARCHIVE_PAGE
+});

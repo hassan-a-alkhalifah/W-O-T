@@ -55,7 +55,7 @@ function Header({ dispatch, checkboxCheckedLists, ifAnyCheckboxIsChecked, homePa
     let anyInputsNotBlank = false;
     Object.keys(newWorkoutMasterExerciseList).forEach((currentWorkoutContent) => {
       if(currentWorkoutContent !== 'masterExerciseList') {
-        if(newWorkoutMasterExerciseList[currentWorkoutContent] !== '') {
+        if(currentWorkoutContent === 'workoutTitleInput' && newWorkoutMasterExerciseList[currentWorkoutContent] !== '') {
           anyInputsNotBlank = true;
         }
       } else {

@@ -23,6 +23,10 @@ export default (state = initialState, action) => {
     case c.CHANGE_PAGE_TYPE: {
       return {...state, pageType: pageType, ifEdit: ifEdit};
     }
+    case c.LOAD_ARCHIVE_PAGE: {
+      console.log('running');
+      return {...state, homePage: false, archivePage: true};
+    }
     default: {
       return state;
     }
