@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from 'react-router-dom';
-import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState, onChangePageType, onAddEditedWorkout } from '../actions';
+import { onAddExercise, onExerciseNotesDisplay, onInputChange, onResetWorkoutForm, onChangePageState, onAddWorkout, onChangePopUpModalState, onChangePageType, onAddEditedWorkout,onEmptyCheckedLists } from '../actions';
 import noteIcon from '../assets/images/note-icon.png';
 import onAddExerciseIcon from '../assets/images/add-exercise-icon.png';
 import finishIcon from '../assets/images/finish-icon.png';
@@ -168,6 +168,7 @@ class Workout extends React.Component {
                     dispatch(onChangePageState());
                     dispatch(onChangePopUpModalState('withoutSavingPopUpModalShown'));
                     dispatch(onChangePageType('/', false));
+                    dispatch(onEmptyCheckedLists());
                   }}
                 />
               </Link>
@@ -213,6 +214,7 @@ class Workout extends React.Component {
                   }
                   dispatch(onResetWorkoutForm(resettedExerciseID, resettedSetID));
                   dispatch(onChangePopUpModalState('finishedWorkoutPopUpModalShown'));
+                  dispatch(onEmptyCheckedLists());
                 }}
               />
               <img
